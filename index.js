@@ -24,7 +24,7 @@ const iosRuntimeList = () => {
                 exit;
             } else {
                 if (stdout) {
-                    const {runtimes} = JSON.parse(stdout);
+                    const { runtimes } = JSON.parse(stdout);
                     resolve({
                         type: 'list',
                         name: 'ios_runtime',
@@ -33,7 +33,7 @@ const iosRuntimeList = () => {
                             key: runtime.identifier,
                             name: runtime.name,
                             value: runtime.identifier,
-                          }))
+                        }))
                     })
                 }
             }
@@ -51,7 +51,7 @@ const iosEmulatorList = (runtimeKey) => {
                 exit;
             } else {
                 if (stdout) {
-                    const {devices} = JSON.parse(stdout);
+                    const { devices } = JSON.parse(stdout);
                     //console.log("IOS Devices", devices[runtimeKey]);
                     resolve({
                         type: 'list',
@@ -65,7 +65,7 @@ const iosEmulatorList = (runtimeKey) => {
                                 deviceUDID: device.udid,
                                 deviceState: device.state
                             }),
-                          }))
+                        }))
                     })
                 }
             }
@@ -96,16 +96,28 @@ const androidEmulatorList = () => {
     })
 }
 
-const pickAction = (selected) => {
-    return {
-        type: 'list',
-        name: 'process',
-        message: `Select a process for ${selected}`,
-        choices: [
-            "wipe & clean boot",
-            "start"
-        ]
+const pickAction = (type, selected) => {
+    const prompts = {
+        ios: {
+            type: 'list',
+            name: 'action',
+            message: `Select a process for ${selected}`,
+            choices: [
+                "wipe & clean boot",
+                "start"
+            ]
+        },
+        android:{
+            type: 'list',
+            name: 'action',
+            message: `Select a process for ${selected}`,
+            choices: [
+                "wipe & clean boot",
+                "start"
+            ]
+        }
     }
+    return prompts[type]
 }
 
 
@@ -115,14 +127,17 @@ async function main() {
     // }).catch((e) => {
     //     console.error(e);
     // })
-    const {os_type} = await inquirer.prompt([pickOsType()])
+    const { os_type } = await inquirer.prompt([pickOsType()])
     if (os_type === 'IOS') {
         console.log("IOS Selected");
-        const {ios_runtime} = await inquirer.prompt([await iosRuntimeList()])
+        const { ios_runtime } = await inquirer.prompt([await iosRuntimeList()])
         console.log("SELECTED IOS RUNTIME", ios_runtime);
-        const {ios_device} = await inquirer.prompt([await iosEmulatorList(ios_runtime)])
-        console.log("SELECTED IOS DEVICE", ios_device);
-    }else {
+        const { ios_device } = await inquirer.prompt([await iosEmulatorList(ios_runtime)])
+        console.log("SELECTED IOS DEVICE", JSON.parse(ios_device));
+        const {deviceName} = JSON.parse(ios_device);
+        const { action } = await inquirer.prompt([pickAction("ios", deviceName)])
+        console.log("Selected Action",action);
+    } else {
         console.log("Android Selected");
     }
 
