@@ -1,0 +1,11 @@
+{
+  "name": "rn-emu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "Uğurcan Emre Ataş",
+  "license": "ISC"
+}
