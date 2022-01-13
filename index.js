@@ -103,11 +103,24 @@ const pickAction = (type, selected) => {
             name: 'action',
             message: `Select a process for ${selected}`,
             choices: [
-                "wipe & clean boot",
-                "start"
+                {
+                    key: "boot",
+                    name: "Boot",
+                    value: "b"
+                },
+                {
+                    key: "shutdown",
+                    name: "Shutdown",
+                    value: "s"
+                },
+                {
+                    key: "erase",
+                    name: "Erase",
+                    value: "e"
+                }
             ]
         },
-        android:{
+        android: {
             type: 'list',
             name: 'action',
             message: `Select a process for ${selected}`,
@@ -118,6 +131,38 @@ const pickAction = (type, selected) => {
         }
     }
     return prompts[type]
+}
+
+const iosDeviceAction = (flag, udid) => {
+    exec(`sh ./shs/options_ios_device.sh -${flag} ${udid}`, (err, stdout, stderr) => {
+        if (err) {
+            console.error(err);
+            exit;
+        } else {
+            if (stdout) {
+                console.log("STDOUT", stdout);
+            }
+        }
+    })
+    // return new Promise((resolve, reject) => {
+    //     exec(`sh ./shs/boot_ios_device.sh ${udid}`, (err, stdout, stderr) => {
+    //         if (err) {
+    //             console.error(err);
+    //             reject(err)
+    //             exit;
+    //         } else {
+    //             if (stdout) {
+    //                 choices = stdout.split("\n").filter(v => v !== '');
+    //                 resolve({
+    //                     type: 'list',
+    //                     name: 'selected_emualator',
+    //                     message: 'Select an emulator',
+    //                     choices
+    //                 })
+    //             }
+    //         }
+    //     })
+    // })
 }
 
 
@@ -134,9 +179,10 @@ async function main() {
         console.log("SELECTED IOS RUNTIME", ios_runtime);
         const { ios_device } = await inquirer.prompt([await iosEmulatorList(ios_runtime)])
         console.log("SELECTED IOS DEVICE", JSON.parse(ios_device));
-        const {deviceName} = JSON.parse(ios_device);
+        const { deviceName, deviceUDID } = JSON.parse(ios_device);
         const { action } = await inquirer.prompt([pickAction("ios", deviceName)])
-        console.log("Selected Action",action);
+        console.log("Selected Action", action);
+        iosDeviceAction(action, deviceUDID);
     } else {
         console.log("Android Selected");
     }
