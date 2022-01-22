@@ -1,5 +1,6 @@
-const { iosRuntimeList } = require("./functions");
+const { iosRuntimeList, iosEmulatorList } = require("./functions");
 
 module.exports = {
   iosRuntimeList,
+  iosEmulatorList,
 };
