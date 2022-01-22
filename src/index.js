@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const { exec } = require("child_process");
 const { exit } = require("process");
+const { SCRIPT_PREFIX } = require("./constants");
 
 const pickOsType = () => {
   return {
@@ -13,7 +14,7 @@ const pickOsType = () => {
 
 const iosRuntimeList = () => {
   return new Promise((resolve, reject) => {
-    exec("sh ./shs/runtime_list_ios.sh", (err, stdout, stderr) => {
+    exec(`sh ${SCRIPT_PREFIX}runtime_list_ios.sh`, (err, stdout, stderr) => {
       if (err) {
         console.error(err);
         reject(err);
@@ -39,7 +40,7 @@ const iosRuntimeList = () => {
 
 const iosEmulatorList = (runtimeKey) => {
   return new Promise((resolve, reject) => {
-    exec("sh ./shs/emu_list_ios.sh", (err, stdout, stderr) => {
+    exec(`sh ${SCRIPT_PREFIX}emu_list_ios.sh`, (err, stdout, stderr) => {
       if (err) {
         console.error(err);
         reject(err);
@@ -82,7 +83,7 @@ const iosEmulatorList = (runtimeKey) => {
 const androidEmulatorList = () => {
   let choices = [];
   return new Promise((resolve, reject) => {
-    exec("sh ./shs/emu_list_android.sh", (err, stdout, stderr) => {
+    exec(`sh ${SCRIPT_PREFIX}emu_list_android.sh`, (err, stdout, stderr) => {
       if (err) {
         console.error(err);
         reject(err);
@@ -143,7 +144,7 @@ const pickAction = (type, selected) => {
 
 const iosDeviceAction = (flag, udid) => {
   exec(
-    `sh ./shs/options_ios_device.sh -${flag} ${udid}`,
+    `sh ${SCRIPT_PREFIX}options_ios_device.sh -${flag} ${udid}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
