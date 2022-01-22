@@ -1,15 +1,10 @@
 const inquirer = require("inquirer");
 const { exec } = require("child_process");
 const { exit } = require("process");
-const { SCRIPT_PREFIX } = require("./constants");
+const { SCRIPT_PREFIX, OS_TYPE_Q } = require("./constants");
 
 const pickOsType = () => {
-  return {
-    type: "list",
-    name: "os_type",
-    message: `Select OS type`,
-    choices: ["IOS", "ANDROID"],
-  };
+  return OS_TYPE_Q;
 };
 
 const iosRuntimeList = () => {
@@ -177,10 +172,12 @@ async function main() {
     //console.log("Selected Action", action, deviceUDID);
     iosDeviceAction(action, deviceUDID);
   } else {
-    //console.log("Android Selected");
+    const { selected_emualator } = await inquirer.prompt([
+      await androidEmulatorList(),
+    ]);
+    console.log("Android Selected", selected_emualator);
   }
 
-  // const {selected_emualator} = await inquirer.prompt([await androidEmulatorList()])
   // const selectedAction = await inquirer.prompt([pickAction(selected_emualator)])
 
   // //console.log("Selected Emulator",os_type, selected_emualator, selectedAction);
