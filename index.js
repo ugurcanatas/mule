@@ -52,7 +52,7 @@ const iosEmulatorList = (runtimeKey) => {
             } else {
                 if (stdout) {
                     const { devices } = JSON.parse(stdout);
-                    //console.log("IOS Devices", devices[runtimeKey]);
+                    ////console.log("IOS Devices", devices[runtimeKey]);
                     resolve({
                         type: 'list',
                         name: 'ios_device',
@@ -117,6 +117,11 @@ const pickAction = (type, selected) => {
                     key: "erase",
                     name: "Erase",
                     value: "e"
+                },
+                {
+                    key: "opensim",
+                    name: "Open simulator & boot",
+                    value: "o"
                 }
             ]
         },
@@ -140,58 +145,39 @@ const iosDeviceAction = (flag, udid) => {
             exit;
         } else {
             if (stdout) {
-                console.log("STDOUT", stdout);
+                //console.log("STDOUT", stdout);
             }
         }
     })
-    // return new Promise((resolve, reject) => {
-    //     exec(`sh ./shs/boot_ios_device.sh ${udid}`, (err, stdout, stderr) => {
-    //         if (err) {
-    //             console.error(err);
-    //             reject(err)
-    //             exit;
-    //         } else {
-    //             if (stdout) {
-    //                 choices = stdout.split("\n").filter(v => v !== '');
-    //                 resolve({
-    //                     type: 'list',
-    //                     name: 'selected_emualator',
-    //                     message: 'Select an emulator',
-    //                     choices
-    //                 })
-    //             }
-    //         }
-    //     })
-    // })
 }
 
 
 async function main() {
     // await inquirer.prompt([await emuList()]).then((answer) => {
-    //     console.log("Answers", answer);
+    //     //console.log("Answers", answer);
     // }).catch((e) => {
     //     console.error(e);
     // })
     const { os_type } = await inquirer.prompt([pickOsType()])
     if (os_type === 'IOS') {
-        console.log("IOS Selected");
+        //console.log("IOS Selected");
         const { ios_runtime } = await inquirer.prompt([await iosRuntimeList()])
-        console.log("SELECTED IOS RUNTIME", ios_runtime);
+        //console.log("SELECTED IOS RUNTIME", ios_runtime);
         const { ios_device } = await inquirer.prompt([await iosEmulatorList(ios_runtime)])
-        console.log("SELECTED IOS DEVICE", JSON.parse(ios_device));
+        //console.log("SELECTED IOS DEVICE", JSON.parse(ios_device));
         const { deviceName, deviceUDID } = JSON.parse(ios_device);
         const { action } = await inquirer.prompt([pickAction("ios", deviceName)])
-        console.log("Selected Action", action);
+        //console.log("Selected Action", action, deviceUDID);
         iosDeviceAction(action, deviceUDID);
     } else {
-        console.log("Android Selected");
+        //console.log("Android Selected");
     }
 
     // const {selected_emualator} = await inquirer.prompt([await androidEmulatorList()])
     // const selectedAction = await inquirer.prompt([pickAction(selected_emualator)])
 
 
-    // console.log("Selected Emulator",os_type, selected_emualator, selectedAction);
+    // //console.log("Selected Emulator",os_type, selected_emualator, selectedAction);
 }
 
 main();
