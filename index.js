@@ -52,7 +52,6 @@ const iosEmulatorList = (runtimeKey) => {
             } else {
                 if (stdout) {
                     const { devices } = JSON.parse(stdout);
-                    ////console.log("IOS Devices", devices[runtimeKey]);
                     resolve({
                         type: 'list',
                         name: 'ios_device',
@@ -145,7 +144,6 @@ const iosDeviceAction = (flag, udid) => {
             exit;
         } else {
             if (stdout) {
-                //console.log("STDOUT", stdout);
             }
         }
     })
