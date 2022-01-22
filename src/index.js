@@ -1,19 +1,15 @@
 const inquirer = require("inquirer");
 const { exec } = require("child_process");
 const { exit } = require("process");
+const { SCRIPT_PREFIX, OS_TYPE_Q } = require("./constants");
 
 const pickOsType = () => {
-  return {
-    type: "list",
-    name: "os_type",
-    message: `Select OS type`,
-    choices: ["IOS", "ANDROID"],
-  };
+  return OS_TYPE_Q;
 };
 
 const iosRuntimeList = () => {
   return new Promise((resolve, reject) => {
-    exec("sh ./shs/runtime_list_ios.sh", (err, stdout, stderr) => {
+    exec(`sh ${SCRIPT_PREFIX}runtime_list_ios.sh`, (err, stdout, stderr) => {
       if (err) {
         console.error(err);
         reject(err);
@@ -39,7 +35,7 @@ const iosRuntimeList = () => {
 
 const iosEmulatorList = (runtimeKey) => {
   return new Promise((resolve, reject) => {
-    exec("sh ./shs/emu_list_ios.sh", (err, stdout, stderr) => {
+    exec(`sh ${SCRIPT_PREFIX}emu_list_ios.sh`, (err, stdout, stderr) => {
       if (err) {
         console.error(err);
         reject(err);
@@ -82,7 +78,7 @@ const iosEmulatorList = (runtimeKey) => {
 const androidEmulatorList = () => {
   let choices = [];
   return new Promise((resolve, reject) => {
-    exec("sh ./shs/emu_list_android.sh", (err, stdout, stderr) => {
+    exec(`sh ${SCRIPT_PREFIX}emu_list_android.sh`, (err, stdout, stderr) => {
       if (err) {
         console.error(err);
         reject(err);
@@ -143,7 +139,7 @@ const pickAction = (type, selected) => {
 
 const iosDeviceAction = (flag, udid) => {
   exec(
-    `sh ./shs/options_ios_device.sh -${flag} ${udid}`,
+    `sh ${SCRIPT_PREFIX}options_ios_device.sh -${flag} ${udid}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
@@ -176,10 +172,12 @@ async function main() {
     //console.log("Selected Action", action, deviceUDID);
     iosDeviceAction(action, deviceUDID);
   } else {
-    //console.log("Android Selected");
+    const { selected_emualator } = await inquirer.prompt([
+      await androidEmulatorList(),
+    ]);
+    console.log("Android Selected", selected_emualator);
   }
 
-  // const {selected_emualator} = await inquirer.prompt([await androidEmulatorList()])
   // const selectedAction = await inquirer.prompt([pickAction(selected_emualator)])
 
   // //console.log("Selected Emulator",os_type, selected_emualator, selectedAction);
