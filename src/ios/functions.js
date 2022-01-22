@@ -1,7 +1,11 @@
 const inquirer = require("inquirer");
 const { exec } = require("child_process");
 const { exit } = require("process");
-const { SCRIPT_PREFIX } = require("../constants");
+const {
+  SCRIPT_PREFIX,
+  IOS_RUNTIME_PROPS,
+  IOS_DEVICE_PROPS,
+} = require("../constants");
 
 const iosRuntimeList = () => {
   return new Promise((resolve, reject) => {
@@ -14,9 +18,7 @@ const iosRuntimeList = () => {
         if (stdout) {
           const { runtimes } = JSON.parse(stdout);
           resolve({
-            type: "list",
-            name: "ios_runtime",
-            message: "Select an IOS Runtime",
+            ...IOS_RUNTIME_PROPS,
             choices: runtimes.map((runtime) => ({
               key: runtime.identifier,
               name: runtime.name,
@@ -50,9 +52,7 @@ const iosEmulatorList = (runtimeKey) => {
           const sortedList = [...bootedDevices, ...offDevices];
 
           resolve({
-            type: "list",
-            name: "ios_device",
-            message: "Select an IOS Device",
+            ...IOS_DEVICE_PROPS,
             choices: sortedList.map((device) => ({
               key: device.udid,
               name: `${device.name} -> (${device.state})`,
