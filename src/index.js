@@ -1,34 +1,10 @@
 const inquirer = require("inquirer");
-const { exec } = require("child_process");
-const { exit } = require("process");
+const { androidEmulatorList } = require("./android");
 const { iosRuntimeList, iosEmulatorList, iosDeviceAction } = require("./ios");
-const { SCRIPT_PREFIX, OS_TYPE_Q } = require("./constants");
+const { OS_TYPE_Q } = require("./constants");
 
 const pickOsType = () => {
   return OS_TYPE_Q;
-};
-
-const androidEmulatorList = () => {
-  let choices = [];
-  return new Promise((resolve, reject) => {
-    exec(`sh ${SCRIPT_PREFIX}emu_list_android.sh`, (err, stdout, stderr) => {
-      if (err) {
-        console.error(err);
-        reject(err);
-        exit;
-      } else {
-        if (stdout) {
-          choices = stdout.split("\n").filter((v) => v !== "");
-          resolve({
-            type: "list",
-            name: "selected_emualator",
-            message: "Select an emulator",
-            choices,
-          });
-        }
-      }
-    });
-  });
 };
 
 const pickAction = (type, selected) => {
