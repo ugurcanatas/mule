@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const { exec } = require("child_process");
 const { exit } = require("process");
-const { iosRuntimeList, iosEmulatorList } = require("./ios");
+const { iosRuntimeList, iosEmulatorList, iosDeviceAction } = require("./ios");
 const { SCRIPT_PREFIX, OS_TYPE_Q } = require("./constants");
 
 const pickOsType = () => {
@@ -68,21 +68,6 @@ const pickAction = (type, selected) => {
     },
   };
   return prompts[type];
-};
-
-const iosDeviceAction = (flag, udid) => {
-  exec(
-    `sh ${SCRIPT_PREFIX}options_ios_device.sh -${flag} ${udid}`,
-    (err, stdout, stderr) => {
-      if (err) {
-        console.error(err);
-        exit;
-      } else {
-        if (stdout) {
-        }
-      }
-    }
-  );
 };
 
 async function main() {
