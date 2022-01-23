@@ -1,5 +1,5 @@
 const inquirer = require("inquirer");
-const { androidEmulatorList } = require("./android");
+const { androidEmulatorList, androidDeviceAction } = require("./android");
 const { iosRuntimeList, iosEmulatorList, iosDeviceAction } = require("./ios");
 const { OS_TYPE_Q } = require("./constants");
 
@@ -61,6 +61,16 @@ const pickAction = (type, selected) => {
           name: "Open simulator & boot",
           value: "o",
         },
+        {
+          key: "debug",
+          name: "Open with debug flag",
+          value: "d",
+        },
+        {
+          key: "logcat",
+          name: "Open with logcat flag",
+          value: "l",
+        },
       ],
     },
   };
@@ -94,6 +104,7 @@ async function main() {
       pickAction("android", selected_emualator),
     ]);
     console.log("Android Selected with action => ", action);
+    androidDeviceAction(action, selected_emualator);
   }
 }
 
