@@ -1,3 +1,4 @@
+const inquirer = require("inquirer");
 const { exec } = require("child_process");
 const { exit } = require("process");
 const { SCRIPT_PREFIX } = require("../constants");
@@ -25,20 +26,57 @@ const androidEmulatorList = () => {
   });
 };
 
-const androidDeviceAction = (flag, udid) => {
+const androidDebugExec = ({ device_name, debug_tags }) => {
   exec(
-    `sh ${SCRIPT_PREFIX}options_android_device.sh -${flag} ${udid} debug-all`,
+    `osascript ${SCRIPT_PREFIX}applescripts/debug.applescript ${device_name} ${debug_tags}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
         exit;
       } else {
         if (stdout) {
-          console.log("Response Android", stdout, stderr);
+          console.log(stdout, stderr);
         }
       }
     }
   );
+};
+
+const androidLogcatExec = () => {};
+
+const androidDeviceAction = async (flag, device_name) => {
+  switch (flag) {
+    case "d": //boot script
+      console.log("Debug Selected");
+      const { debug_tags } = await inquirer.prompt([
+        {
+          type: "input",
+          name: "debug_tags",
+          message: "Enter debug tags",
+        },
+      ]);
+      androidDebugExec({
+        device_name,
+        debug_tags,
+      });
+      break;
+
+    default:
+      break;
+  }
+  // exec(
+  //   `sh ${SCRIPT_PREFIX}options_android_device.sh -${flag} ${udid} debug-all`,
+  //   (err, stdout, stderr) => {
+  //     if (err) {
+  //       console.error(err);
+  //       exit;
+  //     } else {
+  //       if (stdout) {
+  //         console.log("Response Android", stdout, stderr);
+  //       }
+  //     }
+  //   }
+  // );
 };
 
 module.exports = {
