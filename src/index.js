@@ -1,7 +1,11 @@
 const inquirer = require("inquirer");
 const { androidEmulatorList, androidDeviceAction } = require("./android");
 const { iosRuntimeList, iosEmulatorList, iosDeviceAction } = require("./ios");
-const { OS_TYPE_Q } = require("./constants");
+const {
+  OS_TYPE_Q,
+  IOS_ACTION_CHOICES,
+  ANDROID_ACTION_CHOICES,
+} = require("./constants");
 
 const pickOsType = () => {
   return OS_TYPE_Q;
@@ -13,65 +17,13 @@ const pickAction = (type, selected) => {
       type: "list",
       name: "action",
       message: `Select a process for ${selected}`,
-      choices: [
-        {
-          key: "boot",
-          name: "Boot",
-          value: "b",
-        },
-        {
-          key: "shutdown",
-          name: "Shutdown",
-          value: "s",
-        },
-        {
-          key: "erase",
-          name: "Erase",
-          value: "e",
-        },
-        {
-          key: "opensim",
-          name: "Open simulator & boot",
-          value: "o",
-        },
-      ],
+      choices: IOS_ACTION_CHOICES,
     },
     android: {
       type: "list",
       name: "action",
       message: `Select a process for ${selected}`,
-      choices: [
-        {
-          key: "boot",
-          name: "Boot",
-          value: "b",
-        },
-        {
-          key: "shutdown",
-          name: "Shutdown",
-          value: "s",
-        },
-        {
-          key: "erase",
-          name: "Erase",
-          value: "e",
-        },
-        {
-          key: "opensim",
-          name: "Open simulator & boot",
-          value: "o",
-        },
-        {
-          key: "debug",
-          name: "Open with debug flag",
-          value: "d",
-        },
-        {
-          key: "logcat",
-          name: "Open with logcat flag",
-          value: "l",
-        },
-      ],
+      choices: ANDROID_ACTION_CHOICES,
     },
   };
   return prompts[type];
