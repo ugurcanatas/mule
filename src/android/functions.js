@@ -28,7 +28,7 @@ const androidEmulatorList = () => {
 
 const androidDebugExec = ({ device_name, debug_tags }) => {
   exec(
-    `osascript ${SCRIPT_PREFIX}applescripts/debug.applescript ${device_name} ${debug_tags}`,
+    `osascript ${SCRIPT_PREFIX}android/debug.applescript ${device_name} ${debug_tags}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
@@ -42,17 +42,31 @@ const androidDebugExec = ({ device_name, debug_tags }) => {
   );
 };
 
-const androidLogcatExec = () => {};
+const androidLogcatExec = ({ device_name, logcat_tags }) => {
+  exec(
+    `osascript ${SCRIPT_PREFIX}android/logcat.applescript ${device_name} ${logcat_tags}`,
+    (err, stdout, stderr) => {
+      if (err) {
+        console.error(err);
+        exit;
+      } else {
+        if (stdout) {
+          console.log(stdout, stderr);
+        }
+      }
+    }
+  );
+};
 
 const androidDeviceAction = async (flag, device_name) => {
   switch (flag) {
-    case "d": //boot script
+    case "debug": //run emulator with debug
       console.log("Debug Selected");
       const { debug_tags } = await inquirer.prompt([
         {
           type: "input",
           name: "debug_tags",
-          message: "Enter debug tags",
+          message: "Enter debug tags (seperate with comma)\n eg: init,metrics",
         },
       ]);
       androidDebugExec({
@@ -60,23 +74,24 @@ const androidDeviceAction = async (flag, device_name) => {
         debug_tags,
       });
       break;
+    case "logcat": //run emulator with logcat
+      console.log("Logcat Selected");
+      const { logcat_tags } = await inquirer.prompt([
+        {
+          type: "input",
+          name: "logcat_tags",
+          message: "Enter logcat flag(E,V)",
+        },
+      ]);
+      androidLogcatExec({
+        device_name,
+        logcat_tags,
+      });
+      break;
 
     default:
       break;
   }
-  // exec(
-  //   `sh ${SCRIPT_PREFIX}options_android_device.sh -${flag} ${udid} debug-all`,
-  //   (err, stdout, stderr) => {
-  //     if (err) {
-  //       console.error(err);
-  //       exit;
-  //     } else {
-  //       if (stdout) {
-  //         console.log("Response Android", stdout, stderr);
-  //       }
-  //     }
-  //   }
-  // );
 };
 
 module.exports = {
