@@ -40,7 +40,28 @@ const pickAction = (type, selected) => {
       type: "list",
       name: "action",
       message: `Select a process for ${selected}`,
-      choices: ["wipe & clean boot", "start"],
+      choices: [
+        {
+          key: "boot",
+          name: "Boot",
+          value: "b",
+        },
+        {
+          key: "shutdown",
+          name: "Shutdown",
+          value: "s",
+        },
+        {
+          key: "erase",
+          name: "Erase",
+          value: "e",
+        },
+        {
+          key: "opensim",
+          name: "Open simulator & boot",
+          value: "o",
+        },
+      ],
     },
   };
   return prompts[type];
@@ -69,12 +90,11 @@ async function main() {
     const { selected_emualator } = await inquirer.prompt([
       await androidEmulatorList(),
     ]);
-    console.log("Android Selected", selected_emualator);
+    const { action } = await inquirer.prompt([
+      pickAction("android", selected_emualator),
+    ]);
+    console.log("Android Selected with action => ", action);
   }
-
-  // const selectedAction = await inquirer.prompt([pickAction(selected_emualator)])
-
-  // //console.log("Selected Emulator",os_type, selected_emualator, selectedAction);
 }
 
 main();

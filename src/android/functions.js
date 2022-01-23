@@ -25,6 +25,23 @@ const androidEmulatorList = () => {
   });
 };
 
+const androidDeviceAction = (flag, udid) => {
+  exec(
+    `sh ${SCRIPT_PREFIX}options_android_device.sh -${flag} ${udid}`,
+    (err, stdout, stderr) => {
+      if (err) {
+        console.error(err);
+        exit;
+      } else {
+        if (stdout) {
+          console.log("Response Android", stdout);
+        }
+      }
+    }
+  );
+};
+
 module.exports = {
   androidEmulatorList,
+  androidDeviceAction,
 };
