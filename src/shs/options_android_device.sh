@@ -18,7 +18,7 @@ end if
 EOD
 }
 
-while getopts "b:s:e:o:d" option; do
+while getopts "b:s:e:o:d:l" option; do
    case $option in
    b) # Boot Android Device
       #Name=$OPTARG
@@ -51,10 +51,19 @@ while getopts "b:s:e:o:d" option; do
       Name=$OPTARG
       cd ~/Library/Android/sdk/emulator
       ;;
-   # d) # Boot Android Device in debug mode
-   #    Name=$OPTARG
-   #    runEmulatorDebugAll $Name
-   #    ;;
+   d) # Boot Android Device in debug mode
+      echo debuggg
+      ARG1=${1:-foo}
+      ARG2=${2:bar}
+      ARG3=${3:-1}
+
+      echo "$ARG1"
+      echo "$ARG2"
+      echo "$ARG3"
+      ;;
+   l) # Boot Android Device in debug mode
+      Name=$OPTARG
+      ;;
 
    \?) # Invalid option
       echo "Error: Invalid option"

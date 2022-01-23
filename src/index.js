@@ -78,23 +78,14 @@ const pickAction = (type, selected) => {
 };
 
 async function main() {
-  // await inquirer.prompt([await emuList()]).then((answer) => {
-  //     //console.log("Answers", answer);
-  // }).catch((e) => {
-  //     console.error(e);
-  // })
   const { os_type } = await inquirer.prompt([pickOsType()]);
   if (os_type === "IOS") {
-    //console.log("IOS Selected");
     const { ios_runtime } = await inquirer.prompt([await iosRuntimeList()]);
-    //console.log("SELECTED IOS RUNTIME", ios_runtime);
     const { ios_device } = await inquirer.prompt([
       await iosEmulatorList(ios_runtime),
     ]);
-    //console.log("SELECTED IOS DEVICE", JSON.parse(ios_device));
     const { deviceName, deviceUDID } = JSON.parse(ios_device);
     const { action } = await inquirer.prompt([pickAction("ios", deviceName)]);
-    //console.log("Selected Action", action, deviceUDID);
     iosDeviceAction(action, deviceUDID);
   } else {
     const { selected_emualator } = await inquirer.prompt([

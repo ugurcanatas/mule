@@ -27,7 +27,7 @@ const androidEmulatorList = () => {
 
 const androidDeviceAction = (flag, udid) => {
   exec(
-    `sh ${SCRIPT_PREFIX}options_android_device.sh -${flag} ${udid} test`,
+    `sh ${SCRIPT_PREFIX}options_android_device.sh -${flag} ${udid} debug-all`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
