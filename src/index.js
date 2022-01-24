@@ -36,9 +36,9 @@ async function main() {
     const { ios_device } = await inquirer.prompt([
       await iosEmulatorList(ios_runtime),
     ]);
-    const { deviceName, deviceUDID } = JSON.parse(ios_device);
+    const { deviceName, deviceUDID, deviceState } = JSON.parse(ios_device);
     const { action } = await inquirer.prompt([pickAction("ios", deviceName)]);
-    iosDeviceAction(action, deviceUDID);
+    iosDeviceAction(action, deviceUDID, deviceState);
   } else {
     const { selected_emualator } = await inquirer.prompt([
       await androidEmulatorList(),

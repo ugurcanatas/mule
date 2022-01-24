@@ -68,15 +68,18 @@ const iosEmulatorList = (runtimeKey) => {
   });
 };
 
-const iosDeviceAction = (flag, udid) => {
+const iosDeviceAction = (flag, udid, state) => {
+  console.log("IOS DEVICE ACTION", flag, udid, state);
   exec(
-    `sh ${SCRIPT_PREFIX}options_ios_device.sh -${flag} ${udid}`,
+    //`sh ${SCRIPT_PREFIX}options_ios_device.sh -${flag} ${udid}`,
+    `osascript ${SCRIPT_PREFIX}ios/boot.applescript ${udid} ${state}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
         exit;
       } else {
         if (stdout) {
+          console.log("STDOUT", stdout);
         }
       }
     }
