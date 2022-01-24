@@ -25,22 +25,17 @@ const IOS_ACTION_CHOICES = [
   {
     key: "boot",
     name: "Boot",
-    value: "b",
+    value: "boot",
   },
   {
     key: "shutdown",
     name: "Shutdown",
-    value: "s",
+    value: "shutdown",
   },
   {
     key: "erase",
     name: "Erase",
-    value: "e",
-  },
-  {
-    key: "opensim",
-    name: "Open simulator & boot",
-    value: "o",
+    value: "erase",
   },
 ];
 
