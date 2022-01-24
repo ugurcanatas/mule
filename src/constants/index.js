@@ -56,9 +56,9 @@ const ANDROID_ACTION_CHOICES = [
     value: "shutdown",
   },
   {
-    key: "erase",
-    name: "Erase",
-    value: "erase",
+    key: "wipe",
+    name: "Wipe Data",
+    value: "wipe",
   },
   {
     key: "debug",
