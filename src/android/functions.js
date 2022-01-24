@@ -58,6 +58,22 @@ const androidLogcatExec = ({ device_name, logcat_tags }) => {
   );
 };
 
+const androidWipeExec = ({ device_name }) => {
+  exec(
+    `osascript ${SCRIPT_PREFIX}android/wipe.applescript ${device_name}`,
+    (err, stdout, stderr) => {
+      if (err) {
+        console.error(err);
+        exit;
+      } else {
+        if (stdout) {
+          console.log(stdout, stderr);
+        }
+      }
+    }
+  );
+};
+
 const androidDeviceAction = async (flag, device_name) => {
   switch (flag) {
     case "debug": //run emulator with debug
@@ -87,6 +103,12 @@ const androidDeviceAction = async (flag, device_name) => {
         device_name,
         logcat_tags,
       });
+      break;
+    case "wipe":
+      androidWipeExec({
+        device_name,
+      });
+      console.log("Wipe Selected", flag, device_name);
       break;
 
     default:
