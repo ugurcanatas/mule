@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const { exec } = require("child_process");
 const { exit } = require("process");
-const { SCRIPT_PREFIX } = require("../constants");
+const { SCRIPT_PREFIX_ANDROID,SCRIPT_PREFIX } = require("../constants");
 
 const androidEmulatorList = () => {
   let choices = [];
@@ -28,7 +28,7 @@ const androidEmulatorList = () => {
 
 const androidDebugExec = ({ device_name, debug_tags }) => {
   exec(
-    `osascript ${SCRIPT_PREFIX}android/debug.applescript ${device_name} ${debug_tags}`,
+    `osascript ${SCRIPT_PREFIX_ANDROID}debug.applescript ${device_name} ${debug_tags}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
@@ -44,7 +44,7 @@ const androidDebugExec = ({ device_name, debug_tags }) => {
 
 const androidLogcatExec = ({ device_name, logcat_tags }) => {
   exec(
-    `osascript ${SCRIPT_PREFIX}android/logcat.applescript ${device_name} ${logcat_tags}`,
+    `osascript ${SCRIPT_PREFIX_ANDROID}logcat.applescript ${device_name} ${logcat_tags}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
@@ -60,7 +60,7 @@ const androidLogcatExec = ({ device_name, logcat_tags }) => {
 
 const androidWipeExec = ({ device_name }) => {
   exec(
-    `osascript ${SCRIPT_PREFIX}android/wipe.applescript ${device_name}`,
+    `osascript ${SCRIPT_PREFIX_ANDROID}wipe.applescript ${device_name}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);

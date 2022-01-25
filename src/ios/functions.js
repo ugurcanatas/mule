@@ -2,6 +2,7 @@ const { exec } = require("child_process");
 const { exit } = require("process");
 const {
   SCRIPT_PREFIX,
+  SCRIPT_PREFIX_IOS,
   IOS_RUNTIME_PROPS,
   IOS_DEVICE_PROPS,
 } = require("../constants");
@@ -71,7 +72,7 @@ const iosEmulatorList = (runtimeKey) => {
 const iosDeviceAction = (flag, udid, state) => {
   console.log("IOS DEVICE ACTION", flag, udid, state);
   exec(
-    `osascript ${SCRIPT_PREFIX}ios/${flag}.applescript ${udid} ${state}`,
+    `osascript ${SCRIPT_PREFIX_IOS}${flag}.applescript ${udid} ${state}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
