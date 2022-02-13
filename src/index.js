@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const inquirer = require("inquirer");
 const { androidEmulatorList, androidDeviceAction } = require("./android");
 const { iosRuntimeList, iosEmulatorList, iosDeviceAction } = require("./ios");

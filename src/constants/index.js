@@ -1,6 +1,12 @@
-const {ANDROID_ACTION_CHOICES, SCRIPT_PREFIX_ANDROID} = require("./android");
-const {IOS_ACTION_CHOICES, SCRIPT_PREFIX_IOS, IOS_DEVICE_PROPS, IOS_RUNTIME_PROPS} = require("./ios");
-const SCRIPT_PREFIX = "./src/shs/";
+const path = require("path");
+const { ANDROID_ACTION_CHOICES, SCRIPT_PREFIX_ANDROID } = require("./android");
+const {
+  IOS_ACTION_CHOICES,
+  SCRIPT_PREFIX_IOS,
+  IOS_DEVICE_PROPS,
+  IOS_RUNTIME_PROPS,
+} = require("./ios");
+const SCRIPT_PREFIX = path.resolve(__dirname, "../shs");
 
 const MAIN_ACTIONS = ["IOS", "ANDROID"];
 
@@ -10,7 +16,6 @@ const OS_TYPE_Q = {
   message: `Select OS type`,
   choices: MAIN_ACTIONS,
 };
-
 
 module.exports = {
   SCRIPT_PREFIX,
