@@ -6,6 +6,9 @@
   "scripts": {
     "test": "node src/index.js"
   },
+  "bin": {
+    "emu": "./src/index.js"
+  },
   "author": "Uğurcan Emre Ataş",
   "license": "ISC",
   "dependencies": {

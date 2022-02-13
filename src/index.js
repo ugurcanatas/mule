@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const inquirer = require("inquirer");
 const { androidEmulatorList, androidDeviceAction } = require("./android");
 const { iosRuntimeList, iosEmulatorList, iosDeviceAction } = require("./ios");
@@ -46,7 +48,6 @@ async function main() {
     const { action } = await inquirer.prompt([
       pickAction("android", selected_emualator),
     ]);
-    console.log("Android Selected with action => ", action);
     androidDeviceAction(action, selected_emualator);
   }
 }
