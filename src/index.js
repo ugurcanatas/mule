@@ -48,7 +48,6 @@ async function main() {
     const { action } = await inquirer.prompt([
       pickAction("android", selected_emualator),
     ]);
-    console.log("Android Selected with action => ", action);
     androidDeviceAction(action, selected_emualator);
   }
 }
