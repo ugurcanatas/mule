@@ -1,12 +1,14 @@
 const path = require("path");
-const { ANDROID_ACTION_CHOICES, SCRIPT_PREFIX_ANDROID } = require("./android");
+const { ANDROID_ACTION_CHOICES } = require("./android");
 const {
   IOS_ACTION_CHOICES,
-  SCRIPT_PREFIX_IOS,
   IOS_DEVICE_PROPS,
   IOS_RUNTIME_PROPS,
 } = require("./ios");
+
 const SCRIPT_PREFIX = path.resolve(__dirname, "../shs");
+const SCRIPT_PREFIX_ANDROID = path.resolve(__dirname, "../shs/android");
+const SCRIPT_PREFIX_IOS = path.resolve(__dirname, "../shs/ios");
 
 const MAIN_ACTIONS = ["IOS", "ANDROID"];
 
