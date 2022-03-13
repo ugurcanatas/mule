@@ -68,9 +68,9 @@ const iosEmulatorList = (runtimeKey) => {
   });
 };
 
-const iosDeviceAction = (flag, udid, state) => {
+const iosDeviceAction = (type, udid, state, filteredActionResults) => {
   exec(
-    `osascript ${SCRIPT_PREFIX_IOS}${flag}.applescript ${udid} ${state}`,
+    `osascript ${SCRIPT_PREFIX_IOS}/${type}.applescript ${udid} ${state} ${filteredActionResults}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);

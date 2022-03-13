@@ -4,6 +4,7 @@ const {
   IOS_ACTION_CHOICES,
   IOS_DEVICE_PROPS,
   IOS_RUNTIME_PROPS,
+  IOS_ACTION_IDENTIFIERS
 } = require("./ios");
 
 const SCRIPT_PREFIX = path.resolve(__dirname, "../shs");
@@ -29,4 +30,5 @@ module.exports = {
   IOS_DEVICE_PROPS,
   IOS_ACTION_CHOICES,
   ANDROID_ACTION_CHOICES,
+  IOS_ACTION_IDENTIFIERS
 };
