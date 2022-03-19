@@ -5,6 +5,7 @@ const {
   IOS_RUNTIME_PROPS,
   IOS_DEVICE_PROPS
 } = require('../constants');
+const { Spinner } = require('../utils/spinners');
 
 const iosRuntimeList = () =>
   new Promise((resolve, reject) => {
@@ -32,6 +33,10 @@ const iosRuntimeList = () =>
 
 const iosEmulatorList = runtimeKey =>
   new Promise((resolve, reject) => {
+    const spinner = new Spinner({
+      message: 'Finding available IOS emulators'
+    });
+    spinner.startSpinner();
     exec(`sh ${SCRIPT_PREFIX}/emu_list_ios.sh`, (err, stdout, stderr) => {
       if (err) {
         console.error(err);
@@ -49,7 +54,6 @@ const iosEmulatorList = runtimeKey =>
           .sort((a, b) => (a.name < b.name ? 1 : -1));
 
         const sortedList = [...bootedDevices, ...offDevices];
-
         resolve({
           ...IOS_DEVICE_PROPS,
           choices: sortedList.map(device => ({
@@ -62,6 +66,7 @@ const iosEmulatorList = runtimeKey =>
             })
           }))
         });
+        spinner.stopSpinner();
       }
     });
   });

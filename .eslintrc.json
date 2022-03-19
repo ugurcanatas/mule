@@ -11,6 +11,7 @@
     "no-process-exit": "off",
     "object-shorthand": "off",
     "class-methods-use-this": "off",
-    "node/no-unsupported-features/es-syntax": "off"
+    "node/no-unsupported-features/es-syntax": "off",
+    "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }]
   }
 }
