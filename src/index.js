@@ -10,9 +10,7 @@ const {
   IOS_ACTION_IDENTIFIERS
 } = require('./constants');
 
-const pickOsType = () => {
-  return OS_TYPE_Q;
-};
+const pickOsType = () => OS_TYPE_Q;
 
 const pickAction = (type, selected) => {
   const prompts = {
@@ -33,9 +31,10 @@ const pickAction = (type, selected) => {
 };
 
 const iosActionFilter = async identifier => {
+  let { url } = '';
   switch (identifier) {
     case IOS_ACTION_IDENTIFIERS.CUSTOM_ACTION:
-      const { url } = await inquirer.prompt([
+      url = await inquirer.prompt([
         {
           type: 'input',
           name: 'url',
@@ -49,26 +48,20 @@ const iosActionFilter = async identifier => {
 };
 
 async function main() {
-  const { os_type } = await inquirer.prompt([pickOsType()]);
-  if (os_type === 'IOS') {
-    const { ios_runtime } = await inquirer.prompt([await iosRuntimeList()]);
-    const { ios_device } = await inquirer.prompt([
-      await iosEmulatorList(ios_runtime)
-    ]);
-    const { deviceName, deviceUDID, deviceState } = JSON.parse(ios_device);
+  const { osType } = await inquirer.prompt([pickOsType()]);
+  if (osType === 'IOS') {
+    const { iosRuntime } = await inquirer.prompt([await iosRuntimeList()]);
+    const { iosDevice } = await inquirer.prompt([await iosEmulatorList(iosRuntime)]);
+    const { deviceName, deviceUDID, deviceState } = JSON.parse(iosDevice);
     const {
       action: { type, identifier }
     } = await inquirer.prompt([pickAction('ios', deviceName)]);
     const filteredActionResults = await iosActionFilter(identifier);
     iosDeviceAction(type, deviceUDID, deviceState, filteredActionResults);
   } else {
-    const { selected_emualator } = await inquirer.prompt([
-      await androidEmulatorList()
-    ]);
-    const { action } = await inquirer.prompt([
-      pickAction('android', selected_emualator)
-    ]);
-    androidDeviceAction(action, selected_emualator);
+    const { selectedEmualator } = await inquirer.prompt([await androidEmulatorList()]);
+    const { action } = await inquirer.prompt([pickAction('android', selectedEmualator)]);
+    androidDeviceAction(action, selectedEmualator);
   }
 }
 

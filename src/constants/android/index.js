@@ -1,36 +1,36 @@
 const ANDROID_ACTION_CHOICES = [
   {
-    key: "boot",
-    name: "Boot",
-    value: "boot",
+    key: 'boot',
+    name: 'Boot',
+    value: 'boot'
   },
   {
-    key: "shutdown",
-    name: "Shutdown",
-    value: "shutdown",
+    key: 'shutdown',
+    name: 'Shutdown',
+    value: 'shutdown'
   },
   {
-    key: "wipe",
-    name: "Wipe Data",
-    value: "wipe",
+    key: 'wipe',
+    name: 'Wipe Data',
+    value: 'wipe'
   },
   {
-    key: "debug",
-    name: "Open with debug flag",
-    value: "debug",
+    key: 'debug',
+    name: 'Open with debug flag',
+    value: 'debug'
   },
   {
-    key: "logcat",
-    name: "Open with logcat flag",
-    value: "logcat",
+    key: 'logcat',
+    name: 'Open with logcat flag',
+    value: 'logcat'
   },
   {
-    key: "logcat_standalone",
-    name: "Standalone Logcat Window",
-    value: "standalone",
-  },
+    key: 'logcat_standalone',
+    name: 'Standalone Logcat Window',
+    value: 'standalone'
+  }
 ];
 
 module.exports = {
-  ANDROID_ACTION_CHOICES,
+  ANDROID_ACTION_CHOICES
 };

@@ -40,13 +40,13 @@ const IOS_ACTION_CHOICES = [
 
 const IOS_RUNTIME_PROPS = {
   type: 'list',
-  name: 'ios_runtime',
+  name: 'iosRuntime',
   message: 'Select an IOS Runtime'
 };
 
 const IOS_DEVICE_PROPS = {
   type: 'list',
-  name: 'ios_device',
+  name: 'iosDevice',
   message: 'Select an IOS Device'
 };
 
