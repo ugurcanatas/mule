@@ -47,7 +47,7 @@ const IOS_RUNTIME_PROPS = {
 const IOS_DEVICE_PROPS = {
   type: 'list',
   name: 'iosDevice',
-  message: 'Select an IOS Device'
+  message: 'Select an IOS Device \n'
 };
 
 module.exports = {
