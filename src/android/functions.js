@@ -1,6 +1,6 @@
-const inquirer = require("inquirer");
-const { exec } = require("child_process");
-const { SCRIPT_PREFIX_ANDROID, SCRIPT_PREFIX } = require("../constants");
+const inquirer = require('inquirer');
+const { exec } = require('child_process');
+const { SCRIPT_PREFIX_ANDROID, SCRIPT_PREFIX } = require('../constants');
 
 const androidEmulatorList = () => {
   let choices = [];
@@ -9,29 +9,30 @@ const androidEmulatorList = () => {
       if (err) {
         console.error(err);
         reject(err);
-        return;
       } else {
         if (stdout) {
-          choices = stdout.split("\n").filter((v) => v !== "");
+          choices = stdout.split('\n').filter(v => v !== '');
           resolve({
-            type: "list",
-            name: "selected_emualator",
-            message: "Select an emulator",
-            choices,
+            type: 'list',
+            name: 'selectedEmualator',
+            message: 'Select an emulator',
+            choices
           });
+        }
+        if (stderr) {
+          process.stderr.write(stderr);
         }
       }
     });
   });
 };
 
-const androidDebugExec = ({ device_name, debug_tags }) => {
+const androidDebugExec = ({ deviceName, debugTags }) => {
   exec(
-    `osascript ${SCRIPT_PREFIX_ANDROID}/debug.applescript ${device_name} ${debug_tags}`,
+    `osascript ${SCRIPT_PREFIX_ANDROID}/debug.applescript ${deviceName} ${debugTags}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
-        return;
       } else {
         if (stdout) {
           process.stdout.write(stdout);
@@ -44,13 +45,12 @@ const androidDebugExec = ({ device_name, debug_tags }) => {
   );
 };
 
-const androidLogcatExec = ({ device_name, logcat_tags }) => {
+const androidLogcatExec = ({ deviceName, logcatTags }) => {
   exec(
-    `osascript ${SCRIPT_PREFIX_ANDROID}/logcat.applescript ${device_name} ${logcat_tags}`,
+    `osascript ${SCRIPT_PREFIX_ANDROID}/logcat.applescript ${deviceName} ${logcatTags}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
-        return;
       } else {
         if (stdout) {
           process.stdout.write(stdout);
@@ -63,13 +63,12 @@ const androidLogcatExec = ({ device_name, logcat_tags }) => {
   );
 };
 
-const androidWipeExec = ({ device_name }) => {
+const androidWipeExec = ({ deviceName }) => {
   exec(
-    `osascript ${SCRIPT_PREFIX_ANDROID}/wipe.applescript ${device_name}`,
+    `osascript ${SCRIPT_PREFIX_ANDROID}/wipe.applescript ${deviceName}`,
     (err, stdout, stderr) => {
       if (err) {
         console.error(err);
-        return;
       } else {
         if (stdout) {
           process.stdout.write(stdout);
@@ -82,37 +81,45 @@ const androidWipeExec = ({ device_name }) => {
   );
 };
 
-const androidDeviceAction = async (flag, device_name) => {
+const androidDeviceAction = async (flag, deviceName) => {
   switch (flag) {
-    case "debug": //run emulator with debug
-      const { debug_tags } = await inquirer.prompt([
-        {
-          type: "input",
-          name: "debug_tags",
-          message: "Enter debug tags (seperate with comma)\n eg: init,metrics",
-        },
-      ]);
-      androidDebugExec({
-        device_name,
-        debug_tags,
-      });
+    case 'debug': // run emulator with debug
+      await inquirer
+        .prompt([
+          {
+            type: 'input',
+            name: 'debugTags',
+            message: 'Enter debug tags (seperate with comma)\n eg: init,metrics'
+          }
+        ])
+        .then(({ debugTags }) => {
+          androidDebugExec({
+            deviceName,
+            debugTags
+          });
+        });
+
       break;
-    case "logcat": //run emulator with logcat
-      const { logcat_tags } = await inquirer.prompt([
-        {
-          type: "input",
-          name: "logcat_tags",
-          message: "Enter logcat flag(E,V)",
-        },
-      ]);
-      androidLogcatExec({
-        device_name,
-        logcat_tags,
-      });
+    case 'logcat': // run emulator with logcat
+      await inquirer
+        .prompt([
+          {
+            type: 'input',
+            name: 'logcatTags',
+            message: 'Enter logcat flag(E,V)'
+          }
+        ])
+        .then(({ logcatTags }) => {
+          androidLogcatExec({
+            deviceName,
+            logcatTags
+          });
+        });
+
       break;
-    case "wipe":
+    case 'wipe':
       androidWipeExec({
-        device_name,
+        deviceName
       });
       break;
 
@@ -123,5 +130,5 @@ const androidDeviceAction = async (flag, device_name) => {
 
 module.exports = {
   androidEmulatorList,
-  androidDeviceAction,
+  androidDeviceAction
 };

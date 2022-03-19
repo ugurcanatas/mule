@@ -4,11 +4,13 @@
   "rules": {
     "prettier/prettier": "error",
     "comma-dangle": ["error", "never"],
+    "consistent-return": "off",
     "no-unused-vars": "warn",
     "no-console": "off",
     "func-names": "off",
     "no-process-exit": "off",
     "object-shorthand": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "node/no-unsupported-features/es-syntax": "off"
   }
 }
