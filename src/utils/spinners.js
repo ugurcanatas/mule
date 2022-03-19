@@ -34,9 +34,14 @@ const generateColor = (message, colorName) => {
 // };
 
 class Spinner {
-  constructor({ message, type = 'dotsLine' }) {
+  constructor(message, type = 'dotsLine') {
     this.message = message;
     this.type = type;
+  }
+
+  setMessage(message) {
+    this.message = message;
+    return this;
   }
 
   getSpinnerDataByType() {
