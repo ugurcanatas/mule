@@ -1,34 +1,4 @@
-const colors = {
-  BLACK: [30, 39],
-  YELLOW: [33, 89],
-  PURPLE: [22, 0],
-  RED: [31, 89]
-};
-const rgbBackgroundPrefixes = ['\x1b[48;2;', '\x1b[0m'];
-const rgbForegroundPrefixes = ['\x1b[38;2;', '\x1b[0m'];
-
-const rgbFixColors = {
-  RED_500: {
-    red: 244,
-    green: 67,
-    blue: 54
-  },
-  PINK_500: {
-    red: 233,
-    green: 30,
-    blue: 89
-  },
-  INDIGO_500: {
-    red: 67,
-    green: 81,
-    blue: 181
-  },
-  AMBER_500: {
-    red: 255,
-    green: 193,
-    blue: 7
-  }
-};
+const { RGB_COLORS, RGB_BG_PREFIXES, RGB_FG_PREFIXES } = require('./colors');
 
 class Colors {
   constructor(text, backgroundColor = 'AMBER_500', color = 'INDIGO_500') {
@@ -57,18 +27,18 @@ class Colors {
   }
 
   setColorToText() {
-    const rgbNewPrefix = `${rgbFixColors[this.backgroundColor].red};${
-      rgbFixColors[this.backgroundColor].green
-    };${rgbFixColors[this.backgroundColor].blue}m`;
-    this.text = `${rgbForegroundPrefixes[0]}${rgbNewPrefix}${this.text}${rgbForegroundPrefixes[1]}`;
+    const rgbNewPrefix = `${RGB_COLORS[this.backgroundColor].red};${
+      RGB_COLORS[this.backgroundColor].green
+    };${RGB_COLORS[this.backgroundColor].blue}m`;
+    this.text = `${RGB_FG_PREFIXES[0]}${rgbNewPrefix}${this.text}${RGB_FG_PREFIXES[1]}`;
     return this;
   }
 
   setBackgroundToText() {
-    const rgbNewPrefix = `${rgbFixColors[this.color].red};${rgbFixColors[this.color].green};${
-      rgbFixColors[this.color].blue
+    const rgbNewPrefix = `${RGB_COLORS[this.color].red};${RGB_COLORS[this.color].green};${
+      RGB_COLORS[this.color].blue
     }m`;
-    this.text = `${rgbBackgroundPrefixes[0]}${rgbNewPrefix}${this.text}${rgbBackgroundPrefixes[1]}`;
+    this.text = `${RGB_BG_PREFIXES[0]}${rgbNewPrefix}${this.text}${RGB_BG_PREFIXES[1]}`;
     return this;
   }
 }
