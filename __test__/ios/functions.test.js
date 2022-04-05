@@ -9,7 +9,7 @@ describe('Below tests should mock when current process is successful', () => {
 
   test('Expect choices to be an array', async () => {
     const response = await iosRuntimeList();
-    expect(!!response.choices?.length).toBe(true);
+    expect(!!response.choices.length).toBe(true);
     expect(Array.isArray(response.choices)).toBe(true);
   });
 });
