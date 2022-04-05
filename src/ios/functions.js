@@ -9,13 +9,14 @@ const { Spinner } = require('../utils/spinners');
 
 const spinner = new Spinner();
 
-const iosRuntimeList = () =>
+const iosRuntimeList = (scriptPrefix = SCRIPT_PREFIX) =>
   new Promise((resolve, reject) => {
     spinner.setMessage('Getting runtime environments').startSpinner();
-    exec(`sh ${SCRIPT_PREFIX}/runtime_list_ios.sh`, (err, stdout, stderr) => {
+    exec(`sh ${scriptPrefix}/runtime_list_ios.sh`, (err, stdout, stderr) => {
       if (err) {
-        console.error(err);
+        spinner.stopSpinner();
         reject(err);
+        console.error(err);
       } else {
         if (stderr) {
           process.stderr.write(stderr);

@@ -1,6 +1,6 @@
+const readline = require('readline');
 const { Colors } = require('./colorsntext');
 const { COLOR_NAMES } = require('./colors');
-const readline = require('readline');
 
 const spinnerOptions = {
   halfCircles: {
