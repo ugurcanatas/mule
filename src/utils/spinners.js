@@ -1,4 +1,6 @@
 const readline = require('readline');
+const { Colors } = require('./colorsntext');
+const { COLOR_NAMES } = require('./colors');
 
 const spinnerOptions = {
   halfCircles: {
@@ -13,30 +15,25 @@ const spinnerOptions = {
   }
 };
 
-const fontTypes = {
-  bold: [1, 22],
-  dim: [2, 22],
-  italic: [3, 23]
+const generateColor = (message, colorConfiguration) => {
+  const { baseBackgroundColor, baseForegroundColor } = colorConfiguration;
+  const colorsConfig = new Colors(baseBackgroundColor, baseForegroundColor);
+  const { text } = colorsConfig.setText(message).setColorToText().setBackgroundToText();
+  return text;
 };
-
-const colors = {
-  YELLOW: [33, 89],
-  PURPLE: [22, 0],
-  RED: [31, 89]
-};
-const generateColor = (message, colorName) => {
-  const [first, second] = colors[colorName];
-  return `\x1b[${first}m${message}\x1b[${second}m`;
-};
-
-// const generateTextStyle = (message, style) => {
-//   fontTypes[style];
-// };
 
 class Spinner {
-  constructor(message, type = 'dotsLine') {
+  constructor(
+    message,
+    type = 'dotsLine',
+    colorConfiguration = {
+      baseForegroundColor: COLOR_NAMES.AMBER_500,
+      baseBackgroundColor: COLOR_NAMES.RED_500
+    }
+  ) {
     this.message = message;
     this.type = type;
+    this.colorConfiguration = colorConfiguration;
   }
 
   setMessage(message) {
@@ -54,14 +51,14 @@ class Spinner {
 
   startSpinner() {
     const { intervalTime, symbols } = this.getSpinnerDataByType();
-    !!this.message && process.stdout.write(generateColor(this.message, 'RED')); // `\x1b[34m${this.message}\x1b[0m`;
+    !!this.message && process.stdout.write(generateColor(this.message, this.colorConfiguration));
     let counter = 0;
     this.spinnerInterval = setInterval(() => {
       if (!symbols[counter]) {
         counter = 0;
       }
       readline.cursorTo(process.stdout, this.message.length + 1 || 0);
-      process.stdout.write(generateColor(`${symbols[counter]}`, 'RED'));
+      process.stdout.write(generateColor(`${symbols[counter]}`, this.colorConfiguration));
       counter = counter === symbols.length ? 0 : counter + 1;
     }, intervalTime);
   }
