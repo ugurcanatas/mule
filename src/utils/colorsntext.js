@@ -1,7 +1,9 @@
-const { RGB_COLORS, RGB_BG_PREFIXES, RGB_FG_PREFIXES } = require('./colors');
+const { RGB_COLORS, RGB_BG_PREFIXES, RGB_FG_PREFIXES, COLOR_NAMES } = require('./colors');
+
+const { AMBER_500, INDIGO_500 } = COLOR_NAMES;
 
 class Colors {
-  constructor(text, backgroundColor = 'AMBER_500', color = 'INDIGO_500') {
+  constructor(text, backgroundColor = AMBER_500, color = INDIGO_500) {
     this.text = text;
     this.color = color;
     this.backgroundColor = backgroundColor;
