@@ -12,6 +12,17 @@ describe('Below tests should mock when current process is successful', () => {
     expect(!!response.choices.length).toBe(true);
     expect(Array.isArray(response.choices)).toBe(true);
   });
+
+  test('Expect single choice to contain correct value after resolving', async () => {
+    const response = await iosRuntimeList();
+    console.log('response', response);
+    response.choices.filter(choice => {
+      const { key, value, name } = choice;
+      expect(key).toMatch(/com.apple.CoreSimulator/);
+      expect(value).toMatch(/com.apple.CoreSimulator/);
+      expect(name).toMatch(/^iOS|macOS|tvOS|watchOS/);
+    });
+  });
 });
 
 describe('Below tests should mock any error situation', () => {
