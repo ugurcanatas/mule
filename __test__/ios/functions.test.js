@@ -1,4 +1,4 @@
-const { runtimeListsMockData: runtimeChoices } = require('./mocks/runtimeList');
+const { runtimeListsMockData: runtimeChoices, devices } = require('./mocks/runtimeList');
 const { iosRuntimeList, iosEmulatorList } = require('../../src/ios/functions');
 const { createSortedEmulatorList } = require('../../src/ios/utils');
 
@@ -62,8 +62,25 @@ describe('Below tests should mock when ios emulator list process is successful',
 
 describe('test utility functions', () => {
   test('createSortedEmulatorList fn should throw TypeError', async () => {
-    expect(() => createSortedEmulatorList('', '')).toThrowError(
+    expect(() => createSortedEmulatorList([], '')).toThrowError(
       new Error(`Cannot read properties of undefined (reading 'filter')`)
     );
+  });
+
+  test('createSortedEmulatorList fn should throw TypeError even with second parameter', async () => {
+    expect(() => createSortedEmulatorList([], '076869A0-6B83-4225-88E3-26AF42D03209')).toThrowError(
+      new Error(`Cannot read properties of undefined (reading 'filter')`)
+    );
+  });
+
+  test('createSortedEmulatorList fn should throw an error with empty runtime key parameter', async () => {
+    expect(() => createSortedEmulatorList(devices, '')).toThrowError(
+      new Error(`Cannot read properties of undefined (reading 'filter')`)
+    );
+  });
+
+  test('createSortedEmulatorList fn should return device list', async () => {
+    const result = createSortedEmulatorList(devices, 'com.apple.CoreSimulator.SimRuntime.iOS-15-0');
+    expect(Array.isArray(result)).toBe(true);
   });
 });
