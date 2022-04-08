@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Below tests should mock when current process is successful Inquirer object keys should be type name message and choices 1`] = `
+Object {
+  "choices": Array [
+    Object {
+      "key": "com.apple.CoreSimulator.SimRuntime.iOS-15-2",
+      "name": "iOS 15.2",
+      "value": "com.apple.CoreSimulator.SimRuntime.iOS-15-2",
+    },
+    Object {
+      "key": "com.apple.CoreSimulator.SimRuntime.tvOS-15-2",
+      "name": "tvOS 15.2",
+      "value": "com.apple.CoreSimulator.SimRuntime.tvOS-15-2",
+    },
+    Object {
+      "key": "com.apple.CoreSimulator.SimRuntime.watchOS-8-3",
+      "name": "watchOS 8.3",
+      "value": "com.apple.CoreSimulator.SimRuntime.watchOS-8-3",
+    },
+  ],
+  "message": "Select an IOS Runtime",
+  "name": "iosRuntime",
+  "type": "list",
+}
+`;
+
+exports[`Below tests should mock when ios emulator list process is successful iosEmulatorList response should consist ios emulators 1`] = `
+Object {
+  "choices": Array [
+    Object {
+      "key": "076869A0-6B83-4225-88E3-26AF42D03209",
+      "name": "iPod touch (7th generation) ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPod touch (7th generation)",
+        "deviceState": "Shutdown",
+        "deviceUDID": "076869A0-6B83-4225-88E3-26AF42D03209",
+      },
+    },
+    Object {
+      "key": "422AE33B-C50A-4FF6-8E05-F5FDF670BD08",
+      "name": "iPhone SE (2nd generation) ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone SE (2nd generation)",
+        "deviceState": "Shutdown",
+        "deviceUDID": "422AE33B-C50A-4FF6-8E05-F5FDF670BD08",
+      },
+    },
+    Object {
+      "key": "6900648F-53A2-4F67-8ED9-9E48EC4A594A",
+      "name": "iPhone 8 Plus ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 8 Plus",
+        "deviceState": "Shutdown",
+        "deviceUDID": "6900648F-53A2-4F67-8ED9-9E48EC4A594A",
+      },
+    },
+    Object {
+      "key": "5116B7E0-3672-46ED-A8DA-D6B0FC87727C",
+      "name": "iPhone 8 ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 8",
+        "deviceState": "Shutdown",
+        "deviceUDID": "5116B7E0-3672-46ED-A8DA-D6B0FC87727C",
+      },
+    },
+    Object {
+      "key": "1A27D31C-85C1-486C-9888-DB58821A83A5",
+      "name": "iPhone 13 mini ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 13 mini",
+        "deviceState": "Shutdown",
+        "deviceUDID": "1A27D31C-85C1-486C-9888-DB58821A83A5",
+      },
+    },
+    Object {
+      "key": "4DB66D5F-95DC-4443-9BDA-02A2BAE8C64D",
+      "name": "iPhone 13 Pro Max ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 13 Pro Max",
+        "deviceState": "Shutdown",
+        "deviceUDID": "4DB66D5F-95DC-4443-9BDA-02A2BAE8C64D",
+      },
+    },
+    Object {
+      "key": "DA76BCAB-1CAA-4697-9D06-1E562DDC86DF",
+      "name": "iPhone 13 Pro ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 13 Pro",
+        "deviceState": "Shutdown",
+        "deviceUDID": "DA76BCAB-1CAA-4697-9D06-1E562DDC86DF",
+      },
+    },
+    Object {
+      "key": "7C2A310C-D67B-4A0B-8F6C-DEFB48D7AC17",
+      "name": "iPhone 13 ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 13",
+        "deviceState": "Shutdown",
+        "deviceUDID": "7C2A310C-D67B-4A0B-8F6C-DEFB48D7AC17",
+      },
+    },
+    Object {
+      "key": "EBAF64F9-9692-4AEF-BB00-828DE0AE2E51",
+      "name": "iPhone 12 mini ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 12 mini",
+        "deviceState": "Shutdown",
+        "deviceUDID": "EBAF64F9-9692-4AEF-BB00-828DE0AE2E51",
+      },
+    },
+    Object {
+      "key": "35F44140-0A6F-4BE3-A11F-BEE66087DCA4",
+      "name": "iPhone 12 Pro Max ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 12 Pro Max",
+        "deviceState": "Shutdown",
+        "deviceUDID": "35F44140-0A6F-4BE3-A11F-BEE66087DCA4",
+      },
+    },
+    Object {
+      "key": "A9DA710E-55A7-4110-921B-FEB0CB74279E",
+      "name": "iPhone 12 Pro ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 12 Pro",
+        "deviceState": "Shutdown",
+        "deviceUDID": "A9DA710E-55A7-4110-921B-FEB0CB74279E",
+      },
+    },
+    Object {
+      "key": "3DFF3ECA-2619-4192-962B-82C8E2C934E1",
+      "name": "iPhone 12 ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 12",
+        "deviceState": "Shutdown",
+        "deviceUDID": "3DFF3ECA-2619-4192-962B-82C8E2C934E1",
+      },
+    },
+    Object {
+      "key": "08AF68FA-3EED-4B4F-8F00-A30A772D5148",
+      "name": "iPhone 11 Pro Max ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 11 Pro Max",
+        "deviceState": "Shutdown",
+        "deviceUDID": "08AF68FA-3EED-4B4F-8F00-A30A772D5148",
+      },
+    },
+    Object {
+      "key": "2B28B998-672D-4ABB-B1BC-4A7D515ACEA7",
+      "name": "iPhone 11 Pro ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 11 Pro",
+        "deviceState": "Shutdown",
+        "deviceUDID": "2B28B998-672D-4ABB-B1BC-4A7D515ACEA7",
+      },
+    },
+    Object {
+      "key": "63CF4B01-D7FD-4807-BE9B-2A041230B798",
+      "name": "iPhone 11 ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPhone 11",
+        "deviceState": "Shutdown",
+        "deviceUDID": "63CF4B01-D7FD-4807-BE9B-2A041230B798",
+      },
+    },
+    Object {
+      "key": "E9853809-2449-4457-91F9-2A3218D7CE99",
+      "name": "iPad mini (6th generation) ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPad mini (6th generation)",
+        "deviceState": "Shutdown",
+        "deviceUDID": "E9853809-2449-4457-91F9-2A3218D7CE99",
+      },
+    },
+    Object {
+      "key": "89A9CE84-F536-404C-9EAE-D98DE211A43A",
+      "name": "iPad Pro (9.7-inch) ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPad Pro (9.7-inch)",
+        "deviceState": "Shutdown",
+        "deviceUDID": "89A9CE84-F536-404C-9EAE-D98DE211A43A",
+      },
+    },
+    Object {
+      "key": "83EF194D-BF50-4604-8F18-82F2E1843B70",
+      "name": "iPad Pro (12.9-inch) (5th generation) ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPad Pro (12.9-inch) (5th generation)",
+        "deviceState": "Shutdown",
+        "deviceUDID": "83EF194D-BF50-4604-8F18-82F2E1843B70",
+      },
+    },
+    Object {
+      "key": "48D4EF6C-7AA3-4C7C-A525-D673A65E4F3A",
+      "name": "iPad Pro (11-inch) (3rd generation) ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPad Pro (11-inch) (3rd generation)",
+        "deviceState": "Shutdown",
+        "deviceUDID": "48D4EF6C-7AA3-4C7C-A525-D673A65E4F3A",
+      },
+    },
+    Object {
+      "key": "78B3C38B-2759-4517-9B77-6D4BA54CA130",
+      "name": "iPad Air (4th generation) ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPad Air (4th generation)",
+        "deviceState": "Shutdown",
+        "deviceUDID": "78B3C38B-2759-4517-9B77-6D4BA54CA130",
+      },
+    },
+    Object {
+      "key": "F4FD9B81-F5F8-4204-8395-0388EF462173",
+      "name": "iPad (9th generation) ↦ (Shutdown)",
+      "value": Object {
+        "deviceName": "iPad (9th generation)",
+        "deviceState": "Shutdown",
+        "deviceUDID": "F4FD9B81-F5F8-4204-8395-0388EF462173",
+      },
+    },
+  ],
+  "message": "Select an IOS Device 
+",
+  "name": "iosDevice",
+  "type": "list",
+}
+`;
