@@ -69,12 +69,9 @@ const iosDeviceAction = (type, udid, state, filteredActionResults) => {
   exec(
     `osascript ${SCRIPT_PREFIX_IOS}/${type}.applescript ${udid} ${state} ${filteredActionResults}`,
     (err, stdout, stderr) => {
-      if (err) {
-        console.error(err);
+      if (err || stderr) {
+        errorHandler(reject, err || stderr);
         return;
-      }
-      if (stderr) {
-        process.stderr.write(stderr);
       }
       process.stdout.write(stdout);
     }
