@@ -52,7 +52,7 @@ async function main() {
   if (osType === 'IOS') {
     const { iosRuntime } = await inquirer.prompt([await iosRuntimeList()]);
     const { iosDevice } = await inquirer.prompt([await iosEmulatorList(iosRuntime)]);
-    const { deviceName, deviceUDID, deviceState } = JSON.parse(iosDevice);
+    const { deviceName, deviceUDID, deviceState } = iosDevice;
     const {
       action: { type, identifier }
     } = await inquirer.prompt([pickAction('ios', deviceName)]);
