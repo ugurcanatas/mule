@@ -1,22 +1,26 @@
-const { exec } = require('child_process');
-const { createSortedEmulatorList, createNewDeviceList } = require('./utils');
-const {
+import { GenericIOS, IOSDeviceActionFn } from './types';
+import { exec, ExecException } from 'child_process';
+import { createSortedEmulatorList, createNewDeviceList } from './utils';
+import {
   SCRIPT_PREFIX,
   SCRIPT_PREFIX_IOS,
   IOS_RUNTIME_PROPS,
   IOS_DEVICE_PROPS
-} = require('../constants');
+} from '../constants';
 const { Spinner } = require('../utils/spinners');
 
 const spinner = new Spinner();
 
-const errorHandler = (reject, error) => {
+const errorHandler = (
+  reject: ((reason: any) => void) | null,
+  error: ExecException | string | null
+) => {
   spinner.stopSpinner();
-  reject(error);
+  reject && reject(error);
   console.error(error);
 };
 
-const iosRuntimeList = (scriptPrefix = SCRIPT_PREFIX) =>
+const iosRuntimeList = (scriptPrefix: string = SCRIPT_PREFIX) =>
   new Promise((resolve, reject) => {
     spinner.setMessage('Getting runtime environments').startSpinner();
     exec(`sh ${scriptPrefix}/runtime_list_ios.sh`, (err, stdout, stderr) => {
@@ -24,7 +28,7 @@ const iosRuntimeList = (scriptPrefix = SCRIPT_PREFIX) =>
         errorHandler(reject, err || stderr);
         return;
       }
-      const { runtimes } = JSON.parse(stdout);
+      const { runtimes }: { runtimes: GenericIOS[] } = JSON.parse(stdout);
       resolve({
         ...IOS_RUNTIME_PROPS,
         choices: runtimes.map(runtime => ({
@@ -37,7 +41,7 @@ const iosRuntimeList = (scriptPrefix = SCRIPT_PREFIX) =>
     });
   });
 
-const iosEmulatorList = runtimeKey =>
+const iosEmulatorList = (runtimeKey: string) =>
   new Promise((resolve, reject) => {
     spinner.setMessage('Finding IOS simulators').startSpinner();
     exec(`sh ${SCRIPT_PREFIX}/emu_list_ios.sh`, (err, stdout, stderr) => {
@@ -57,13 +61,13 @@ const iosEmulatorList = runtimeKey =>
     });
   });
 
-const iosDeviceAction = (type, udid, state, filteredActionResults) => {
+const iosDeviceAction: IOSDeviceActionFn = (type, udid, state, filteredActionResults) => {
   spinner.setMessage(`Starting selected ${type} process`).startSpinner();
   exec(
     `osascript ${SCRIPT_PREFIX_IOS}/${type}.applescript ${udid} ${state} ${filteredActionResults}`,
     (err, stdout, stderr) => {
       if (err || stderr) {
-        errorHandler(reject, err || stderr);
+        errorHandler(null, err || stderr);
         return;
       }
       process.stdout.write(stdout);
@@ -72,8 +76,4 @@ const iosDeviceAction = (type, udid, state, filteredActionResults) => {
   spinner.stopSpinner();
 };
 
-module.exports = {
-  iosRuntimeList,
-  iosEmulatorList,
-  iosDeviceAction
-};
+export { iosRuntimeList, iosEmulatorList, iosDeviceAction };
