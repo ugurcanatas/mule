@@ -10,7 +10,7 @@ enum IOS_ACTION_IDENTIFIERS {
   CUSTOM_ACTION = 'CUSTOM_ACTION'
 }
 
-interface ACTION_CHOICES<T> {
+export interface ACTION_CHOICES<T = {} | ''> {
   key: string;
   name: string;
   value: T;

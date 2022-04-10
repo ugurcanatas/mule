@@ -1,4 +1,6 @@
-const ANDROID_ACTION_CHOICES = [
+import { ACTION_CHOICES } from '../types';
+
+const ANDROID_ACTION_CHOICES: ACTION_CHOICES[] = [
   {
     key: 'boot',
     name: 'Boot',
@@ -31,6 +33,4 @@ const ANDROID_ACTION_CHOICES = [
   }
 ];
 
-module.exports = {
-  ANDROID_ACTION_CHOICES
-};
+export { ANDROID_ACTION_CHOICES };
