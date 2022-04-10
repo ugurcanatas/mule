@@ -1,5 +1,5 @@
 const { exec } = require('child_process');
-const { createSortedEmulatorList } = require('./utils');
+const { createSortedEmulatorList, createNewDeviceList } = require('./utils');
 const {
   SCRIPT_PREFIX,
   SCRIPT_PREFIX_IOS,
@@ -47,18 +47,11 @@ const iosEmulatorList = runtimeKey =>
       }
       const { devices } = JSON.parse(stdout);
       const sortedList = createSortedEmulatorList(devices, runtimeKey);
+      const choices = createNewDeviceList(sortedList);
 
       resolve({
         ...IOS_DEVICE_PROPS,
-        choices: sortedList.map(device => ({
-          key: device.udid,
-          name: `${device.name} ↦ (${device.state})`,
-          value: {
-            deviceName: device.name,
-            deviceUDID: device.udid,
-            deviceState: device.state
-          }
-        }))
+        choices
       });
       spinner.stopSpinner();
     });
