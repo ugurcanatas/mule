@@ -1,11 +1,6 @@
-const COLOR_NAMES = {
-  RED_500: 'RED_500',
-  PINK_500: 'PINK_500',
-  INDIGO_500: 'INDIGO_500',
-  AMBER_500: 'AMBER_500'
-};
+import { ColorNamesEnum, RGBColorObject } from '../types';
 
-const RGB_COLORS = {
+const RGB_COLORS: Partial<RGBColorObject> = {
   RED_500: {
     red: 244,
     green: 67,
@@ -31,4 +26,6 @@ const RGB_COLORS = {
 const RGB_BG_PREFIXES = ['\x1b[48;2;', '\x1b[0m'];
 const RGB_FG_PREFIXES = ['\x1b[38;2;', '\x1b[0m'];
 
-module.exports = { RGB_COLORS, RGB_BG_PREFIXES, RGB_FG_PREFIXES, COLOR_NAMES };
+export { RGB_COLORS, RGB_BG_PREFIXES, RGB_FG_PREFIXES, ColorNamesEnum };
+
+module.exports = { RGB_COLORS, RGB_BG_PREFIXES, RGB_FG_PREFIXES, ColorNamesEnum };
