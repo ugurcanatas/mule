@@ -1,8 +1,8 @@
-interface TYPE_GENERIC_PROMPT<T = {}> {
+interface TYPE_GENERIC_PROMPT<T = {} | []> {
   type: string;
   name: string;
   message: string;
-  extra?: T;
+  choices?: T;
 }
 
 enum IOS_ACTION_IDENTIFIERS {
