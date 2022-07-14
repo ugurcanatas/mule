@@ -1,6 +1,6 @@
 import { ColorNamesEnum, RGBColorObject } from '../types';
 
-const RGB_COLORS: Partial<RGBColorObject> = {
+const RGB_COLORS: RGBColorObject = {
   RED_500: {
     red: 244,
     green: 67,
@@ -17,6 +17,11 @@ const RGB_COLORS: Partial<RGBColorObject> = {
     blue: 181
   },
   AMBER_500: {
+    red: 255,
+    green: 193,
+    blue: 7
+  },
+  YELLOW_500: {
     red: 255,
     green: 193,
     blue: 7
