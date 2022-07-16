@@ -7,7 +7,7 @@ import {
   IOS_RUNTIME_PROPS,
   IOS_DEVICE_PROPS
 } from '../constants';
-const { Spinner } = require('../utils/spinners');
+import { Spinner } from '../utils/spinners';
 
 const spinner = new Spinner();
 

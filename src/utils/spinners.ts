@@ -1,8 +1,26 @@
-const readline = require('readline');
-const { Colors } = require('./colorsntext');
-const { COLOR_NAMES } = require('./colors');
+import readline from 'readline';
+import { Colors } from './colorsntext';
+import { ColorNamesEnum } from './colors';
 
-const spinnerOptions = {
+type TSpinnerOpts = {
+  [key in string]: {
+    type: 'dotsLine' | 'halfCircles';
+    intervalTime: number;
+    symbols: string[];
+  };
+};
+
+type TSpinner = {
+  message?: string;
+  type: TSpinnerOpts[keyof TSpinnerOpts]['type'];
+  colorConfiguration: {
+    baseForegroundColor: ColorNamesEnum;
+    baseBackgroundColor: ColorNamesEnum;
+  };
+  spinnerInterval?: NodeJS.Timer;
+};
+
+const spinnerOptions: TSpinnerOpts = {
   halfCircles: {
     type: 'halfCircles',
     intervalTime: 80,
@@ -15,20 +33,25 @@ const spinnerOptions = {
   }
 };
 
-const generateColor = (message, colorConfiguration) => {
+const generateColor = (message: string, colorConfiguration: TSpinner['colorConfiguration']) => {
   const { baseBackgroundColor, baseForegroundColor } = colorConfiguration;
   const colorsConfig = new Colors(baseBackgroundColor, baseForegroundColor);
   const { text } = colorsConfig.setText(message).setColorToText().setBackgroundToText();
   return text;
 };
 
-class Spinner {
+class Spinner implements TSpinner {
+  message: string;
+  type: TSpinnerOpts[keyof TSpinnerOpts]['type'];
+  colorConfiguration: { baseForegroundColor: ColorNamesEnum; baseBackgroundColor: ColorNamesEnum };
+  spinnerInterval?: NodeJS.Timer;
+
   constructor(
-    message,
-    type = 'dotsLine',
-    colorConfiguration = {
-      baseForegroundColor: COLOR_NAMES.AMBER_500,
-      baseBackgroundColor: COLOR_NAMES.RED_500
+    message: string = '',
+    type: TSpinnerOpts[keyof TSpinnerOpts]['type'] = 'dotsLine',
+    colorConfiguration: TSpinner['colorConfiguration'] = {
+      baseForegroundColor: ColorNamesEnum.AMBER_500,
+      baseBackgroundColor: ColorNamesEnum.RED_500
     }
   ) {
     this.message = message;
@@ -36,7 +59,7 @@ class Spinner {
     this.colorConfiguration = colorConfiguration;
   }
 
-  setMessage(message) {
+  setMessage(message: string) {
     this.message = message;
     return this;
   }
@@ -57,7 +80,7 @@ class Spinner {
       if (!symbols[counter]) {
         counter = 0;
       }
-      readline.cursorTo(process.stdout, this.message.length + 1 || 0);
+      readline.cursorTo(process.stdout, this.message.length + 1 ?? 0);
       process.stdout.write(generateColor(`${symbols[counter]}`, this.colorConfiguration));
       counter = counter === symbols.length ? 0 : counter + 1;
     }, intervalTime);
@@ -67,11 +90,9 @@ class Spinner {
     this.message = ' \n';
     process.stdout.write(this.message);
     this.spinnerInterval && clearInterval(this.spinnerInterval);
-    this.spinnerInterval = null;
+    this.spinnerInterval = undefined;
     this.message = '';
   }
 }
 
-module.exports = {
-  Spinner
-};
+export { Spinner };
