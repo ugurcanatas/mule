@@ -1,24 +1,24 @@
 import readline from 'readline';
-import { Colors } from './colorsntext'
-import { ColorNamesEnum } from './colors'
+import { Colors } from './colorsntext';
+import { ColorNamesEnum } from './colors';
 
 type TSpinnerOpts = {
   [key in string]: {
-    type: 'dotsLine' | 'halfCircles'
-    intervalTime: number
-    symbols: string[]
-  }
-}
+    type: 'dotsLine' | 'halfCircles';
+    intervalTime: number;
+    symbols: string[];
+  };
+};
 
 type TSpinner = {
-  message: string
-  type: TSpinnerOpts[keyof TSpinnerOpts]['type']
+  message?: string;
+  type: TSpinnerOpts[keyof TSpinnerOpts]['type'];
   colorConfiguration: {
-    baseForegroundColor: ColorNamesEnum
-    baseBackgroundColor: ColorNamesEnum
-  }
-  spinnerInterval?: NodeJS.Timer
-}
+    baseForegroundColor: ColorNamesEnum;
+    baseBackgroundColor: ColorNamesEnum;
+  };
+  spinnerInterval?: NodeJS.Timer;
+};
 
 const spinnerOptions: TSpinnerOpts = {
   halfCircles: {
@@ -42,12 +42,12 @@ const generateColor = (message: string, colorConfiguration: TSpinner['colorConfi
 
 class Spinner implements TSpinner {
   message: string;
-  type: TSpinnerOpts[keyof TSpinnerOpts]['type']
-  colorConfiguration: { baseForegroundColor: ColorNamesEnum; baseBackgroundColor: ColorNamesEnum; };
-  spinnerInterval?: NodeJS.Timer
+  type: TSpinnerOpts[keyof TSpinnerOpts]['type'];
+  colorConfiguration: { baseForegroundColor: ColorNamesEnum; baseBackgroundColor: ColorNamesEnum };
+  spinnerInterval?: NodeJS.Timer;
 
   constructor(
-    message: string,
+    message: string = '',
     type: TSpinnerOpts[keyof TSpinnerOpts]['type'] = 'dotsLine',
     colorConfiguration: TSpinner['colorConfiguration'] = {
       baseForegroundColor: ColorNamesEnum.AMBER_500,
@@ -80,7 +80,7 @@ class Spinner implements TSpinner {
       if (!symbols[counter]) {
         counter = 0;
       }
-      readline.cursorTo(process.stdout, this.message.length + 1 || 0);
+      readline.cursorTo(process.stdout, this.message.length + 1 ?? 0);
       process.stdout.write(generateColor(`${symbols[counter]}`, this.colorConfiguration));
       counter = counter === symbols.length ? 0 : counter + 1;
     }, intervalTime);
@@ -95,6 +95,4 @@ class Spinner implements TSpinner {
   }
 }
 
-export {
-  Spinner
-}
+export { Spinner };
