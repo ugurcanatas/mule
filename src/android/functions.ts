@@ -1,6 +1,7 @@
-const inquirer = require('inquirer');
-const { exec } = require('child_process');
-const { SCRIPT_PREFIX_ANDROID, SCRIPT_PREFIX } = require('../constants');
+import inquirer from 'inquirer';
+import { exec } from 'child_process';
+import { SCRIPT_PREFIX_ANDROID, SCRIPT_PREFIX } from '../constants';
+import { TAndroidFunctions } from './types';
 
 const androidEmulatorList = () => {
   let choices = [];
@@ -27,7 +28,7 @@ const androidEmulatorList = () => {
   });
 };
 
-const androidDebugExec = ({ deviceName, debugTags }) => {
+const androidDebugExec = ({ deviceName, debugTags }: Pick<TAndroidFunctions, 'deviceName' | 'debugTags'>) => {
   exec(
     `osascript ${SCRIPT_PREFIX_ANDROID}/debug.applescript ${deviceName} ${debugTags}`,
     (err, stdout, stderr) => {
@@ -45,7 +46,7 @@ const androidDebugExec = ({ deviceName, debugTags }) => {
   );
 };
 
-const androidLogcatExec = ({ deviceName, logcatTags }) => {
+const androidLogcatExec = ({ deviceName, logcatTags }: Pick<TAndroidFunctions, 'deviceName' | 'logcatTags'>) => {
   exec(
     `osascript ${SCRIPT_PREFIX_ANDROID}/logcat.applescript ${deviceName} ${logcatTags}`,
     (err, stdout, stderr) => {
@@ -63,7 +64,7 @@ const androidLogcatExec = ({ deviceName, logcatTags }) => {
   );
 };
 
-const androidWipeExec = ({ deviceName }) => {
+const androidWipeExec = ({ deviceName }: Pick<TAndroidFunctions, 'deviceName'>) => {
   exec(
     `osascript ${SCRIPT_PREFIX_ANDROID}/wipe.applescript ${deviceName}`,
     (err, stdout, stderr) => {
@@ -81,7 +82,8 @@ const androidWipeExec = ({ deviceName }) => {
   );
 };
 
-const androidDeviceAction = async (flag, deviceName) => {
+const androidDeviceAction: (params: Pick<TAndroidFunctions, 'deviceName' | 'flag'>) => Promise<void> = async (params) => {
+  const { deviceName, flag } = params;
   switch (flag) {
     case 'debug': // run emulator with debug
       await inquirer
@@ -121,14 +123,13 @@ const androidDeviceAction = async (flag, deviceName) => {
       androidWipeExec({
         deviceName
       });
-      break;
 
     default:
       break;
   }
 };
 
-module.exports = {
+export {
   androidEmulatorList,
   androidDeviceAction
-};
+}
