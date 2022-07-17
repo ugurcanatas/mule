@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const inquirer = require('inquirer');
+import inquirer from 'inquirer';
 const { androidEmulatorList, androidDeviceAction } = require('./android');
 const { iosRuntimeList, iosEmulatorList, iosDeviceAction } = require('./ios');
 const {
