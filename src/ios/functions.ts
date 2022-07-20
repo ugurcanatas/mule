@@ -1,4 +1,4 @@
-import { GenericIOS, IOSDeviceActionFn } from './types';
+import { GenericIOS, IOSDeviceActionFn, UpdatedDevicesList } from './types';
 import { exec, ExecException } from 'child_process';
 import { createSortedEmulatorList, createNewDeviceList } from './utils';
 import {
@@ -8,6 +8,8 @@ import {
   IOS_DEVICE_PROPS
 } from '../constants';
 import { Spinner } from '../utils/spinners';
+import { TYPE_GENERIC_PROMPT } from '../constants/types';
+import { GenericIOSPromiseFunction } from './types';
 
 const spinner = new Spinner();
 
@@ -20,15 +22,25 @@ const errorHandler = (
   console.error(error);
 };
 
-const iosRuntimeList = (scriptPrefix: string = SCRIPT_PREFIX) =>
+const iosRuntimeList: GenericIOSPromiseFunction<
+  Pick<GenericIOS, 'key' | 'name' | 'value'>[]
+> = () =>
   new Promise((resolve, reject) => {
     spinner.setMessage('Getting runtime environments').startSpinner();
-    exec(`sh ${scriptPrefix}/runtime_list_ios.sh`, (err, stdout, stderr) => {
+    exec(`sh ${SCRIPT_PREFIX}/runtime_list_ios.sh`, (err, stdout, stderr) => {
       if (err || stderr) {
         errorHandler(reject, err || stderr);
         return;
       }
       const { runtimes }: { runtimes: GenericIOS[] } = JSON.parse(stdout);
+      console.log('object :>> ', {
+        ...IOS_RUNTIME_PROPS,
+        choices: runtimes.map(runtime => ({
+          key: runtime.identifier,
+          name: runtime.name,
+          value: runtime.identifier
+        }))
+      });
       resolve({
         ...IOS_RUNTIME_PROPS,
         choices: runtimes.map(runtime => ({
@@ -41,7 +53,11 @@ const iosRuntimeList = (scriptPrefix: string = SCRIPT_PREFIX) =>
     });
   });
 
-const iosEmulatorList = (runtimeKey: string) =>
+const iosEmulatorList: GenericIOSPromiseFunction<
+  UpdatedDevicesList[],
+  'Promise',
+  string
+> = runtimeKey =>
   new Promise((resolve, reject) => {
     spinner.setMessage('Finding IOS simulators').startSpinner();
     exec(`sh ${SCRIPT_PREFIX}/emu_list_ios.sh`, (err, stdout, stderr) => {

@@ -1,4 +1,4 @@
-import { TYPE_GENERIC_PROMPT } from './types';
+import { TYPE_GENERIC_PROMPT, OS_TYPE_ENUM } from './types';
 
 import path from 'path';
 import { ANDROID_ACTION_CHOICES } from './android';
@@ -13,9 +13,9 @@ const SCRIPT_PREFIX = path.resolve(__dirname, '../shs');
 const SCRIPT_PREFIX_ANDROID = path.resolve(__dirname, '../shs/android');
 const SCRIPT_PREFIX_IOS = path.resolve(__dirname, '../shs/ios');
 
-const MAIN_ACTIONS = ['IOS', 'ANDROID'];
+const MAIN_ACTIONS = [OS_TYPE_ENUM.IOS, OS_TYPE_ENUM.ANDROID];
 
-const OS_TYPE_Q: TYPE_GENERIC_PROMPT = {
+const OS_TYPE_Q: TYPE_GENERIC_PROMPT<typeof MAIN_ACTIONS> = {
   type: 'list',
   name: 'osType', // key of returned value from inquirer
   message: `Select OS type`,

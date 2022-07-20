@@ -4,6 +4,8 @@
  * Exporting the function type to get a full tpescript support
  */
 
+import { TYPE_GENERIC_PROMPT } from '../constants/types';
+
 interface GenericIOS<T = {}> {
   name: string;
   state: string;
@@ -41,7 +43,19 @@ type UpdatedDevicesList = Omit<
 
 type NewDeviceListFunction = (devices: GenericIOS[]) => UpdatedDevicesList[];
 
-export { SortedEmulatorFunctionType, NewDeviceListFunction, GenericIOS };
+type GenericIOSPromiseFunction<T, V = 'Promise' | 'Regular', G = {}> = (
+  args: G
+) => V extends 'Promise' ? Promise<TYPE_GENERIC_PROMPT<T>> : TYPE_GENERIC_PROMPT<T>;
+type GenericIOSFunction<T> = <args>(args?: args) => TYPE_GENERIC_PROMPT<T>;
+
+export {
+  SortedEmulatorFunctionType,
+  NewDeviceListFunction,
+  GenericIOS,
+  UpdatedDevicesList,
+  GenericIOSPromiseFunction,
+  GenericIOSFunction
+};
 
 /**
  * FN Types in ios/functions

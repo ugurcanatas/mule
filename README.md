@@ -26,3 +26,11 @@ These documentation files will be updated soon.
 
 
 More to come...
+
+
+
+TODOS: 
+
+XCode & Android Studio should be present in the users system
+- Explain this error:  xcrun: error: unable to find utility "simctl", not a developer tool or in PATH
+    - https://stackoverflow.com/questions/29108172/how-do-i-fix-the-xcrun-unable-to-find-simctl-error

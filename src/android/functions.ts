@@ -3,7 +3,12 @@ import { exec } from 'child_process';
 import { SCRIPT_PREFIX_ANDROID, SCRIPT_PREFIX } from '../constants';
 import { TAndroidFunctions } from './types';
 
-const androidEmulatorList = () => {
+const androidEmulatorList = (): Promise<{
+  type: string;
+  name: string;
+  message: string;
+  choices: string[]
+}> => {
   let choices = [];
   return new Promise((resolve, reject) => {
     exec(`sh ${SCRIPT_PREFIX}/emu_list_android.sh`, (err, stdout, stderr) => {
@@ -15,7 +20,7 @@ const androidEmulatorList = () => {
           choices = stdout.split('\n').filter(v => v !== '');
           resolve({
             type: 'list',
-            name: 'selectedEmualator',
+            name: 'selectedEmulator',
             message: 'Select an emulator',
             choices
           });

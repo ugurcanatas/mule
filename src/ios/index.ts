@@ -1,3 +1,3 @@
-const { iosRuntimeList, iosEmulatorList, iosDeviceAction } = require('./functions');
+import { iosRuntimeList, iosDeviceAction, iosEmulatorList } from "./functions";
 
 export { iosDeviceAction, iosEmulatorList, iosRuntimeList }
