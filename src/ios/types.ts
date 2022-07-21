@@ -5,7 +5,7 @@
  */
 
 import { QuestionCollection } from 'inquirer';
-import { OS_TYPE_ENUM, TYPE_GENERIC_PROMPT } from '../constants/types';
+import { OS_TYPE_ENUM } from '../constants/types';
 
 interface GenericIOS<T = {}> {
   name: string;
@@ -30,7 +30,6 @@ type SortedEmulatorFunctionType = (
  * createNewDeviceList
  * Types and Interfaces for this function
  */
-
 interface ModifiedDeviceValueObject {
   deviceName: GenericIOS['name'];
   deviceUDID: GenericIOS['udid'];
@@ -44,11 +43,6 @@ type UpdatedDevicesList = Omit<
 
 type NewDeviceListFunction = (devices: GenericIOS[]) => UpdatedDevicesList[];
 
-type GenericIOSPromiseFunction<T, V = 'Promise' | 'Regular', G = {}> = (
-  args: G
-) => V extends 'Promise' ? Promise<TYPE_GENERIC_PROMPT<T>> : TYPE_GENERIC_PROMPT<T>;
-type GenericIOSFunction<T> = <args>(args?: args) => TYPE_GENERIC_PROMPT<T>;
-
 export type GenericQuestionFN<choices> = <T extends string>(
   args?: T
 ) => Promise<GenericQuestion<choices>>;
@@ -56,15 +50,6 @@ export type GenericQuestionFN<choices> = <T extends string>(
 export type GenericQuestion<T> = QuestionCollection<{
   question: { choices: T };
 }>;
-
-export {
-  SortedEmulatorFunctionType,
-  NewDeviceListFunction,
-  GenericIOS,
-  UpdatedDevicesList,
-  GenericIOSPromiseFunction,
-  GenericIOSFunction
-};
 
 export interface IOS_ANSWERS {
   osType: OS_TYPE_ENUM;
@@ -96,10 +81,11 @@ export enum IOS_MESSAGES_ENUM {
 /**
  * FN Types in ios/functions
  */
-
 export type IOSDeviceActionFn = (
   type: string,
   udid: string,
   state: string,
   filteredActionResults: string
 ) => void;
+
+export { SortedEmulatorFunctionType, NewDeviceListFunction, GenericIOS, UpdatedDevicesList };

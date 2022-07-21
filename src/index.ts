@@ -1,18 +1,16 @@
 #!/usr/bin/env node
 
-import inquirer, { Answers, DynamicQuestionProperty, QuestionCollection } from 'inquirer';
+import inquirer from 'inquirer';
 // import { androidEmulatorList, androidDeviceAction } from './android';
 import { iosRuntimeList, iosDeviceAction, iosEmulatorList } from './ios';
 import {
   OS_TYPE_Q,
   ANDROID_ACTION_CHOICES,
   IOS_ACTION_CHOICES,
-  IOS_ACTION_IDENTIFIERS,
-  MAIN_ACTIONS
+  IOS_ACTION_IDENTIFIERS
 } from './constants';
-import { TYPE_GENERIC_PROMPT, OS_TYPE_ENUM, GenericPromptResult } from './constants/types';
-import { GenericIOS, GenericIOSPromiseFunction, IOS_ANSWERS } from './ios/types';
-// import { TYPE_GENERIC_PROMPT } from './constants/types';
+import { OS_TYPE_ENUM } from './constants/types';
+import { IOS_ANSWERS } from './ios/types';
 
 const pickOsType = () => OS_TYPE_Q;
 
@@ -34,31 +32,21 @@ const pickAction = (type: OS_TYPE_ENUM, selected: string) => {
   return prompts[type];
 };
 
-// const iosActionFilter = async identifier => {
-//   let { url } = '';
-//   switch (identifier) {
-//     case IOS_ACTION_IDENTIFIERS.CUSTOM_ACTION:
-//       url = await inquirer.prompt([
-//         {
-//           type: 'input',
-//           name: 'url',
-//           message: 'URL Input'
-//         }
-//       ])o;
-//       return url;
-//     default:
-//       break;
-//   }
-// };
-
-const inquirerWrapper = async <T1 extends string, T2, V, P = 'Promise' | 'Regular'>(
-  fn: GenericIOSPromiseFunction<V, P>
-) => {
-  return await inquirer.prompt<GenericPromptResult<T1, T2>>([fn({})]);
-};
-
-const inquirerPromp = async <T extends Answers>(question: QuestionCollection) => {
-  return await inquirer.prompt<T>(question);
+const iosActionFilter = async (identifier: string) => {
+  let url = { url: '' };
+  switch (identifier) {
+    case IOS_ACTION_IDENTIFIERS.CUSTOM_ACTION:
+      url = await inquirer.prompt<{ url: string }>([
+        {
+          type: 'input',
+          name: 'url',
+          message: 'URL Input'
+        }
+      ]);
+      return url.url;
+    default:
+      return null;
+  }
 };
 
 /**
@@ -78,6 +66,8 @@ const actionFilter = {
     ]);
     const { deviceName, deviceState, deviceUDID } = iosDevice;
 
+    // Get selected predefined action type such as DEFAULT action or CUSTOM action
+    // boot, wipe, send link etc.
     const {
       action: { identifier, type }
     } = await inquirer.prompt<{
@@ -86,7 +76,9 @@ const actionFilter = {
         identifier: string;
       };
     }>([pickAction(OS_TYPE_ENUM.IOS, deviceName)]);
-    console.log('pickAction :>> ', identifier, type);
+
+    const filteredActionResults = await iosActionFilter(identifier);
+    iosDeviceAction(type, deviceUDID, deviceState, filteredActionResults ?? '');
   },
   [OS_TYPE_ENUM.ANDROID]: async () => {
     console.log('OS Type Selected Android');
@@ -96,10 +88,8 @@ const actionFilter = {
 async function main() {
   const { osType } = await inquirer.prompt<Pick<IOS_ANSWERS, 'osType'>>([pickOsType()]);
 
-  // call filter object rather than if / else
+  // call filter object rather than if / else statement
   await actionFilter[osType]();
-
-  console.log('OS TYPE', osType);
 
   // if (osType === 'IOS') {
   //   const { iosRuntime } = await inquirer.prompt([await iosRuntimeList()]);

@@ -1,29 +1,9 @@
 import { GenericIOS, IOSDeviceActionFn, UpdatedDevicesList } from './types';
 import { exec, ExecException } from 'child_process';
 import { createSortedEmulatorList, createNewDeviceList } from './utils';
-import {
-  SCRIPT_PREFIX,
-  SCRIPT_PREFIX_IOS,
-  IOS_RUNTIME_PROPS,
-  IOS_DEVICE_PROPS
-} from '../constants';
+import { SCRIPT_PREFIX, SCRIPT_PREFIX_IOS } from '../constants';
 import { Spinner } from '../utils/spinners';
-import { TYPE_GENERIC_PROMPT } from '../constants/types';
-import {
-  GenericIOSPromiseFunction,
-  IOS_ANSWERS,
-  IOS_ANSWERS_ENUM,
-  IOS_MESSAGES_ENUM,
-  GenericQuestion,
-  GenericQuestionFN
-} from './types';
-import {
-  ChoiceCollection,
-  Question,
-  ListChoiceMap,
-  QuestionCollection,
-  ListQuestion
-} from 'inquirer';
+import { IOS_ANSWERS_ENUM, IOS_MESSAGES_ENUM, GenericQuestion, GenericQuestionFN } from './types';
 
 const spinner = new Spinner();
 
