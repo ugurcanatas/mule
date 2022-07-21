@@ -59,7 +59,7 @@ const iosEmulatorList: GenericQuestionFN<UpdatedDevicesList> = <T extends string
       const question: GenericQuestion<UpdatedDevicesList> = {
         type: 'list',
         name: 'iosDevice',
-        message: 'Select an IOS Device \n',
+        message: IOS_MESSAGES_ENUM.iosDevice,
         choices
       };
       resolve(question);

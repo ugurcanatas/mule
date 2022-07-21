@@ -2,13 +2,9 @@ import inquirer from 'inquirer';
 import { exec } from 'child_process';
 import { SCRIPT_PREFIX_ANDROID, SCRIPT_PREFIX } from '../constants';
 import { TAndroidFunctions } from './types';
+import { GenericQuestionFN } from '../ios/types';
 
-const androidEmulatorList = (): Promise<{
-  type: string;
-  name: string;
-  message: string;
-  choices: string[]
-}> => {
+const androidEmulatorList: GenericQuestionFN<string[]> = () => {
   let choices = [];
   return new Promise((resolve, reject) => {
     exec(`sh ${SCRIPT_PREFIX}/emu_list_android.sh`, (err, stdout, stderr) => {
@@ -17,7 +13,7 @@ const androidEmulatorList = (): Promise<{
         reject(err);
       } else {
         if (stdout) {
-          choices = stdout.split('\n').filter(v => v !== '');
+          choices = stdout.split('\n').filter(v => v !== '') as string[];
           resolve({
             type: 'list',
             name: 'selectedEmulator',
@@ -33,7 +29,10 @@ const androidEmulatorList = (): Promise<{
   });
 };
 
-const androidDebugExec = ({ deviceName, debugTags }: Pick<TAndroidFunctions, 'deviceName' | 'debugTags'>) => {
+const androidDebugExec = ({
+  deviceName,
+  debugTags
+}: Pick<TAndroidFunctions, 'deviceName' | 'debugTags'>) => {
   exec(
     `osascript ${SCRIPT_PREFIX_ANDROID}/debug.applescript ${deviceName} ${debugTags}`,
     (err, stdout, stderr) => {
@@ -51,7 +50,10 @@ const androidDebugExec = ({ deviceName, debugTags }: Pick<TAndroidFunctions, 'de
   );
 };
 
-const androidLogcatExec = ({ deviceName, logcatTags }: Pick<TAndroidFunctions, 'deviceName' | 'logcatTags'>) => {
+const androidLogcatExec = ({
+  deviceName,
+  logcatTags
+}: Pick<TAndroidFunctions, 'deviceName' | 'logcatTags'>) => {
   exec(
     `osascript ${SCRIPT_PREFIX_ANDROID}/logcat.applescript ${deviceName} ${logcatTags}`,
     (err, stdout, stderr) => {
@@ -87,7 +89,9 @@ const androidWipeExec = ({ deviceName }: Pick<TAndroidFunctions, 'deviceName'>) 
   );
 };
 
-const androidDeviceAction: (params: Pick<TAndroidFunctions, 'deviceName' | 'flag'>) => Promise<void> = async (params) => {
+const androidDeviceAction: (
+  params: Pick<TAndroidFunctions, 'deviceName' | 'flag'>
+) => Promise<void> = async params => {
   const { deviceName, flag } = params;
   switch (flag) {
     case 'debug': // run emulator with debug
@@ -134,7 +138,4 @@ const androidDeviceAction: (params: Pick<TAndroidFunctions, 'deviceName' | 'flag
   }
 };
 
-export {
-  androidEmulatorList,
-  androidDeviceAction
-}
+export { androidEmulatorList, androidDeviceAction };
