@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import inquirer from 'inquirer';
-// import { androidEmulatorList, androidDeviceAction } from './android';
+import { androidEmulatorList, androidDeviceAction } from './android';
 import { iosRuntimeList, iosDeviceAction, iosEmulatorList } from './ios';
 import {
   OS_TYPE_Q,
@@ -81,7 +81,15 @@ const actionFilter = {
     iosDeviceAction(type, deviceUDID, deviceState, filteredActionResults ?? '');
   },
   [OS_TYPE_ENUM.ANDROID]: async () => {
-    console.log('OS Type Selected Android');
+    const { selectedEmulator } = await inquirer.prompt<{ selectedEmulator: string }>([
+      await androidEmulatorList()
+    ]);
+
+    const { action } = await inquirer.prompt<{ action: string }>([
+      pickAction(OS_TYPE_ENUM.ANDROID, selectedEmulator)
+    ]);
+
+    androidDeviceAction({ flag: action, deviceName: selectedEmulator });
   }
 };
 
@@ -90,21 +98,6 @@ async function main() {
 
   // call filter object rather than if / else statement
   await actionFilter[osType]();
-
-  // if (osType === 'IOS') {
-  //   const { iosRuntime } = await inquirer.prompt([await iosRuntimeList()]);
-  //   const { iosDevice } = await inquirer.prompt([await iosEmulatorList(iosRuntime)]);
-  //   const { deviceName, deviceUDID, deviceState } = iosDevice;
-  //   const {
-  //     action: { type, identifier }
-  //   } = await inquirer.prompt([pickAction('ios', deviceName)]);
-  //   const filteredActionResults = await iosActionFilter(identifier);
-  //   iosDeviceAction(type, deviceUDID, deviceState, filteredActionResults);
-  // } else {
-  //   const { selectedEmulator } = await inquirer.prompt([await androidEmulatorList()]);
-  //   const { action } = await inquirer.prompt([pickAction('android', selectedEmulator)]);
-  //   androidDeviceAction(action, selectedEmulator);
-  // }
 }
 
 main();

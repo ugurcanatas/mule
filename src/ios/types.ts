@@ -72,7 +72,7 @@ export enum IOS_ANSWERS_ENUM {
 export enum IOS_MESSAGES_ENUM {
   osType = 'osType',
   iosRuntime = 'Select an IOS Runtime',
-  iosDevice = 'iosDevice',
+  iosDevice = 'Select an IOS Device \n',
   deviceName = 'deviceName',
   deviceUDID = 'deviceUDID',
   deviceState = 'deviceState'
