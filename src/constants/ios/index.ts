@@ -1,4 +1,4 @@
-import { TYPE_IOS_ACTION_CHOICES, IOS_ACTION_IDENTIFIERS, TYPE_GENERIC_PROMPT } from '../types';
+import { TYPE_IOS_ACTION_CHOICES, IOS_ACTION_IDENTIFIERS } from '../types';
 
 const IOS_ACTION_CHOICES: TYPE_IOS_ACTION_CHOICES = [
   {
@@ -35,23 +35,16 @@ const IOS_ACTION_CHOICES: TYPE_IOS_ACTION_CHOICES = [
   }
 ];
 
-const IOS_RUNTIME_PROPS: TYPE_GENERIC_PROMPT = {
-  type: 'list',
-  name: 'iosRuntime',
-  message: 'Select an IOS Runtime'
-};
+// const IOS_RUNTIME_PROPS: ListQuestion = {
+//   type: 'list',
+//   name: 'iosRuntime',
+//   message: 'Select an IOS Runtime'
+// };
 
-const IOS_DEVICE_PROPS: TYPE_GENERIC_PROMPT = {
-  type: 'list',
-  name: 'iosDevice',
-  message: 'Select an IOS Device \n'
-};
+// const IOS_DEVICE_PROPS: TYPE_GENERIC_PROMPT = {
+//   type: 'list',
+//   name: 'iosDevice',
+//   message: 'Select an IOS Device \n'
+// };
 
-export { IOS_ACTION_CHOICES, IOS_RUNTIME_PROPS, IOS_DEVICE_PROPS, IOS_ACTION_IDENTIFIERS };
-
-module.exports = {
-  IOS_ACTION_CHOICES,
-  IOS_RUNTIME_PROPS,
-  IOS_DEVICE_PROPS,
-  IOS_ACTION_IDENTIFIERS
-};
+export { IOS_ACTION_CHOICES, IOS_ACTION_IDENTIFIERS };

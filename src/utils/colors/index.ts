@@ -32,5 +32,3 @@ const RGB_BG_PREFIXES = ['\x1b[48;2;', '\x1b[0m'];
 const RGB_FG_PREFIXES = ['\x1b[38;2;', '\x1b[0m'];
 
 export { RGB_COLORS, RGB_BG_PREFIXES, RGB_FG_PREFIXES, ColorNamesEnum };
-
-module.exports = { RGB_COLORS, RGB_BG_PREFIXES, RGB_FG_PREFIXES, ColorNamesEnum };

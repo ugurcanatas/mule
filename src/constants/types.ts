@@ -10,6 +10,11 @@ enum IOS_ACTION_IDENTIFIERS {
   CUSTOM_ACTION = 'CUSTOM_ACTION'
 }
 
+enum OS_TYPE_ENUM {
+  IOS = 'IOS',
+  ANDROID = 'ANDROID'
+}
+
 export interface ACTION_CHOICES<T = {} | ''> {
   key: string;
   name: string;
@@ -20,4 +25,14 @@ type IOS_ACTION_VALUE = { type: string; identifier: IOS_ACTION_IDENTIFIERS };
 
 type TYPE_IOS_ACTION_CHOICES = ACTION_CHOICES<IOS_ACTION_VALUE>[];
 
-export { TYPE_IOS_ACTION_CHOICES, IOS_ACTION_IDENTIFIERS, TYPE_GENERIC_PROMPT };
+type GenericPromptResult<KEY extends string, RESULT> = {
+  [k in KEY]: RESULT;
+};
+
+export {
+  TYPE_IOS_ACTION_CHOICES,
+  IOS_ACTION_IDENTIFIERS,
+  TYPE_GENERIC_PROMPT,
+  OS_TYPE_ENUM,
+  GenericPromptResult
+};
