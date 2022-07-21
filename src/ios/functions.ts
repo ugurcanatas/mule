@@ -9,7 +9,21 @@ import {
 } from '../constants';
 import { Spinner } from '../utils/spinners';
 import { TYPE_GENERIC_PROMPT } from '../constants/types';
-import { GenericIOSPromiseFunction } from './types';
+import {
+  GenericIOSPromiseFunction,
+  IOS_ANSWERS,
+  IOS_ANSWERS_ENUM,
+  IOS_MESSAGES_ENUM,
+  GenericQuestion,
+  GenericQuestionFN
+} from './types';
+import {
+  ChoiceCollection,
+  Question,
+  ListChoiceMap,
+  QuestionCollection,
+  ListQuestion
+} from 'inquirer';
 
 const spinner = new Spinner();
 
@@ -22,9 +36,7 @@ const errorHandler = (
   console.error(error);
 };
 
-const iosRuntimeList: GenericIOSPromiseFunction<
-  Pick<GenericIOS, 'key' | 'name' | 'value'>[]
-> = () =>
+const iosRuntimeList: GenericQuestionFN<Pick<GenericIOS, 'key' | 'name' | 'value'>> = () =>
   new Promise((resolve, reject) => {
     spinner.setMessage('Getting runtime environments').startSpinner();
     exec(`sh ${SCRIPT_PREFIX}/runtime_list_ios.sh`, (err, stdout, stderr) => {
@@ -33,31 +45,26 @@ const iosRuntimeList: GenericIOSPromiseFunction<
         return;
       }
       const { runtimes }: { runtimes: GenericIOS[] } = JSON.parse(stdout);
-      console.log('object :>> ', {
-        ...IOS_RUNTIME_PROPS,
+
+      const question: GenericQuestion<Pick<GenericIOS, 'key' | 'name' | 'value'>> = {
+        type: 'list',
+        name: IOS_ANSWERS_ENUM.iosRuntime,
+        message: IOS_MESSAGES_ENUM.iosRuntime,
         choices: runtimes.map(runtime => ({
           key: runtime.identifier,
           name: runtime.name,
           value: runtime.identifier
         }))
-      });
-      resolve({
-        ...IOS_RUNTIME_PROPS,
-        choices: runtimes.map(runtime => ({
-          key: runtime.identifier,
-          name: runtime.name,
-          value: runtime.identifier
-        }))
-      });
+      };
+
+      resolve(question);
       spinner.stopSpinner();
     });
   });
 
-const iosEmulatorList: GenericIOSPromiseFunction<
-  UpdatedDevicesList[],
-  'Promise',
-  string
-> = runtimeKey =>
+const iosEmulatorList: GenericQuestionFN<UpdatedDevicesList> = <T extends string | undefined>(
+  runtimeKey: T
+) =>
   new Promise((resolve, reject) => {
     spinner.setMessage('Finding IOS simulators').startSpinner();
     exec(`sh ${SCRIPT_PREFIX}/emu_list_ios.sh`, (err, stdout, stderr) => {
@@ -66,13 +73,17 @@ const iosEmulatorList: GenericIOSPromiseFunction<
         return;
       }
       const { devices } = JSON.parse(stdout);
-      const sortedList = createSortedEmulatorList(devices, runtimeKey);
+      const sortedList = createSortedEmulatorList(devices, runtimeKey as string);
       const choices = createNewDeviceList(sortedList);
 
-      resolve({
-        ...IOS_DEVICE_PROPS,
+      const question: GenericQuestion<UpdatedDevicesList> = {
+        type: 'list',
+        name: 'iosDevice',
+        message: 'Select an IOS Device \n',
         choices
-      });
+      };
+      resolve(question);
+
       spinner.stopSpinner();
     });
   });

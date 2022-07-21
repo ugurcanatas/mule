@@ -4,7 +4,8 @@
  * Exporting the function type to get a full tpescript support
  */
 
-import { TYPE_GENERIC_PROMPT } from '../constants/types';
+import { QuestionCollection } from 'inquirer';
+import { OS_TYPE_ENUM, TYPE_GENERIC_PROMPT } from '../constants/types';
 
 interface GenericIOS<T = {}> {
   name: string;
@@ -48,6 +49,14 @@ type GenericIOSPromiseFunction<T, V = 'Promise' | 'Regular', G = {}> = (
 ) => V extends 'Promise' ? Promise<TYPE_GENERIC_PROMPT<T>> : TYPE_GENERIC_PROMPT<T>;
 type GenericIOSFunction<T> = <args>(args?: args) => TYPE_GENERIC_PROMPT<T>;
 
+export type GenericQuestionFN<choices> = <T extends string>(
+  args?: T
+) => Promise<GenericQuestion<choices>>;
+
+export type GenericQuestion<T> = QuestionCollection<{
+  question: { choices: T };
+}>;
+
 export {
   SortedEmulatorFunctionType,
   NewDeviceListFunction,
@@ -56,6 +65,33 @@ export {
   GenericIOSPromiseFunction,
   GenericIOSFunction
 };
+
+export interface IOS_ANSWERS {
+  osType: OS_TYPE_ENUM;
+  iosRuntime: string;
+  iosDevice: ModifiedDeviceValueObject;
+  deviceName: string;
+  deviceUDID: string;
+  deviceState: string;
+}
+
+export enum IOS_ANSWERS_ENUM {
+  osType = 'osType',
+  iosRuntime = 'iosRuntime',
+  iosDevice = 'iosDevice',
+  deviceName = 'deviceName',
+  deviceUDID = 'deviceUDID',
+  deviceState = 'deviceState'
+}
+
+export enum IOS_MESSAGES_ENUM {
+  osType = 'osType',
+  iosRuntime = 'Select an IOS Runtime',
+  iosDevice = 'iosDevice',
+  deviceName = 'deviceName',
+  deviceUDID = 'deviceUDID',
+  deviceState = 'deviceState'
+}
 
 /**
  * FN Types in ios/functions
